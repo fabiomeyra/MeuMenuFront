@@ -1,27 +1,27 @@
 const categoryData = [
 {
     img:'assets/img/food-delivery/category/01.jpg',
-    title:'Burgers & Fries'
+    title:'Burgers & Fritas'
 },
 {
     img:'assets/img/food-delivery/category/02.jpg',
-    title:'Noodles'
+    title:'Macarrão'
 },
 {
     img:'assets/img/food-delivery/category/03.jpg',
-    title:'Sushi & Rolls'
+    title:'Sushi'
 },
 {
     img:'assets/img/food-delivery/category/04.jpg',
-    title:'Pizza & Pasta'
+    title:'Pizzas'
 },
 {
     img:'assets/img/food-delivery/category/05.jpg',
-    title:'Coffee & Desserts'
+    title:'Sobremesas'
 },
 {
-    img:'assets/img/food-delivery/category/06.jpg',
-    title:'Healthy & Food'
+    img:'assets/img/food-delivery/category/07.jpg',
+    title:'Bebidas'
 },
 
 ];

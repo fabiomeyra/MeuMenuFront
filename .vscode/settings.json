@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/8b6f2f6e-284c-48d1-9cfd-b88d0b536777/resourceGroups/meu-menu/providers/Microsoft.Web/sites/meu-menu-app",
+    "appService.deploySubpath": "dist"
+}

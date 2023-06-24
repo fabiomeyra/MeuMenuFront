@@ -1,19 +1,16 @@
 {
   "MENUITEMS": {
     "CUISINE": {
-      "TEXT": "Cozinha",
+      "TEXT": "Categorias",
       "LIST": {
         "Burgers&Fries": "Hamburgeres e Fritas",
-        "Noodles": "Noodles",
-        "Pizza&Pasta": "Pizza & Pasta",
-        "Grill&Steaks": "Grill & Steaks",
-        "Fish&Seafood": "Fish & Seafood",
-        "HealthyFood": "Healthy Food",
-        "HauteCuisine": "Haute Cuisine",
-        "Chicken&Snaks": "Chicken & Snaks",
-        "Coffee&Desserts": "Coffee & Desserts"
+        "Noodles": "Macarrão",
+        "Pizza&Pasta": "Pizzas",
+        "Fish&Seafood": "Sushi",
+        "HealthyFood": "Bebidas",
+        "HauteCuisine": "Sobremesas"
       }
     },
-    "BaACKTOMAINDEMO":"Back to main demo"
+    "BaACKTOMAINDEMO":"Voltar ao menu principal"
   }
 }

@@ -1,29 +1,21 @@
 <app-header></app-header>
 <!-- Hero section-->
-<section class="bg-darker bg-size-cover bg-position-center py-5 py-lg-10"
+<!-- <section class="bg-darker bg-size-cover bg-position-center py-5 py-lg-10"
     style="background-image: url(assets/img/food-delivery/hero-bg.jpg);">
     <div class="container pb-5">
         <div class="row justify-content-center pb-5">
             <div class="col-xl-6 col-lg-7 col-md-8 col-sm-10 text-center">
                 <h5 class="text-light fw-light">#1 Food Delivery Service since 2010</h5>
                 <div class="h1 text-light mb-3 pb-4">We deliver your favorite food fresh &amp; fast in
-                    <div class="dropdown d-inline-block ms-1"><a class="dropdown-toggle" href="javascript:void(0);"
-                            data-bs-toggle="dropdown">New York</a>
-                        <div class="dropdown-menu dropdown-menu-end"><a class="dropdown-item fs-base" href="javascript:void(0);">Los
-                                Angeles</a><a class="dropdown-item fs-base" href="javascript:void(0);">Chicago</a><a
-                                class="dropdown-item fs-base" href="javascript:void(0);">Houston</a><a class="dropdown-item fs-base"
-                                href="javascript:void(0);">Philadelphia</a><a class="dropdown-item fs-base" href="javascript:void(0);">San Diego</a><a
-                                class="dropdown-item fs-base" href="javascript:void(0);">Miami</a></div>
-                    </div>
                 </div><a class="btn btn-primary" href="javascript:void(0)" [ngxScrollTo]="'#cuisine'" data-scroll>What do you want to eat?</a>
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Categories (cuisine) grid-->
 <section class="container py-4 my-lg-3 py-sm-5" id="cuisine">
-    <h2 class="text-center pt-4 pt-sm-3">Trending food in your city</h2>
-    <p class="text-muted text-center mb-5">Choose what you want and we dilever it to you</p>
+    <h2 class="text-center pt-4 pt-sm-3">O que vai comer hoje?</h2>
+    <p class="text-muted text-center mb-5"></p>
     <div class="row">
         <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
             <a class="card border-0 shadow" routerLink="/category"><img class="card-img-top" src="{{cat.img}}"
@@ -36,7 +28,7 @@
     </div>
 </section>
 <!-- Mobile app CTA-->
-<section class="bg-primary bg-size-cover bg-position-center pt-5"
+<!-- <section class="bg-primary bg-size-cover bg-position-center pt-5"
     style="background-image: url(img/food-delivery/mobile-app-bg.jpg);">
     <div class="container pt-2 pt-sm-0">
         <div class="row align-items-center">
@@ -54,9 +46,9 @@
                     src="assets/img/food-delivery/phone.png" width="331" alt="Mobile App Screen"></div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Become Courier / Partner CTA-->
-<section class="container pb-4 pt-lg-5 pb-sm-5">
+<!-- <section class="container pb-4 pt-lg-5 pb-sm-5">
     <div class="row pt-4 mt-2 mt-lg-3 mb-md-2">
         <div class="col-lg-6 mb-grid-gutter">
             <div class="d-block d-sm-flex justify-content-between align-items-center bg-faded-info rounded-3">
@@ -79,9 +71,9 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Popular restaurants logo grid-->
-<section class="container pb-4 pt-2 pt-sm-0 pt-md-2 pb-sm-5">
+<!-- <section class="container pb-4 pt-2 pt-sm-0 pt-md-2 pb-sm-5">
     <h2 class="text-center">Popular restaurants in your city</h2>
     <p class="text-muted pb-4 text-center">Check the best restaurants near you</p>
     <div class="row pb-2 pb-sm-0 pb-md-3">
@@ -91,9 +83,9 @@
                     alt="Brand"></a>
         </div>
     </div>
-</section>
+</section> -->
 <!-- Reviews-->
-<section class="bg-secondary py-5">
+<!-- <section class="bg-secondary py-5">
     <div class="container py-md-4 pt-3 pb-0 py-sm-3">
         <h2 class="text-center mb-4 mb-md-5">Customer reviews</h2>
          <swiper [config]="config">
@@ -121,6 +113,6 @@
             </div>
         </swiper>
     </div>
-</section>
+</section> -->
 
 <app-footer></app-footer>
