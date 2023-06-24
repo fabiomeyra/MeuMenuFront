@@ -1,0 +1,19 @@
+{
+  "MENUITEMS": {
+    "CUISINE": {
+      "TEXT": "Cozinha",
+      "LIST": {
+        "Burgers&Fries": "Hamburgeres e Fritas",
+        "Noodles": "Noodles",
+        "Pizza&Pasta": "Pizza & Pasta",
+        "Grill&Steaks": "Grill & Steaks",
+        "Fish&Seafood": "Fish & Seafood",
+        "HealthyFood": "Healthy Food",
+        "HauteCuisine": "Haute Cuisine",
+        "Chicken&Snaks": "Chicken & Snaks",
+        "Coffee&Desserts": "Coffee & Desserts"
+      }
+    },
+    "BaACKTOMAINDEMO":"Back to main demo"
+  }
+}
