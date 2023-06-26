@@ -1,0 +1,89 @@
+<app-header></app-header>
+<!-- Page title-->
+<section class="bg-darker bg-size-cover bg-position-center py-5">
+  <div class="container py-md-4">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb breadcrumb-light flex-lg-nowrap justify-content-center justify-content-lg-start">
+        <li class="breadcrumb-item"><a class="text-nowrap" href="javascript:void(0);" routerLink="/"><i class="ci-home"></i>Home</a>
+        </li>
+        <li class="breadcrumb-item text-nowrap active" aria-current="page">{{descricao}}</li>
+      </ol>
+    </nav>
+    <h1 class="text-light text-center text-lg-start py-3">{{descricao}}</h1>
+  </div>
+</section>
+<!-- Menu (Products grid)-->
+<section class="container tab-content py-4 py-sm-5">
+  <div class="row pt-3 pt-sm-0">
+    <!-- Item-->
+    <div *ngFor="let item of products;let i = index;" class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
+      <div class="card product-card border pb-2"><a class="d-block" data-bs-target="#quick-view" data-bs-toggle="modal"
+          (click)="openModal(content,i)"><img class="card-img-top" src="{{item.produtoImagem}}" alt="{{item.produtoDescricao}}"></a>
+        <div class="card-body pt-1 pb-2">
+          <h3 class="product-title fs-md"><a href="javascript:void(0)" data-bs-toggle="modal" (click)="openModal(content,i)">{{item.produtoDescricao}}</a></h3>
+          <p class="fs-ms text-muted">{{item.produtoIngredientes}}</p>
+          <div class="d-flex align-items-center justify-content-between">
+            <div class="product-price"><span class="text-accent">{{item.produtoValor | currency:'BRL'}}</span></div>
+            <button class="btn btn-primary btn-sm" type="button" (click)="addtocart(i)">+<i
+                class="ci-cart fs-base ms-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Item-->
+  </div>
+
+  <!-- Load more button-->
+  <!-- <nav class="d-md-flex justify-content-between align-items-center text-center text-md-start pt-2 pb-4 mb-md-2"
+    aria-label="Page navigation">
+    <div class="d-md-flex align-items-center w-100"><span class="fs-sm text-muted me-md-3">Showing 8 of 24 items </span>
+      <ngb-progressbar type="dark" [value]="8" class="progress w-100 my-3 mx-auto mx-md-0" style="max-width: 10rem; height: 4px;"></ngb-progressbar>
+    </div>
+    <button class="btn btn-outline-secondary" type="button">Load more items</button>
+  </nav> -->
+</section>
+<app-footer></app-footer>
+
+<!-- Quick View Modal-->
+<ng-template #content role="document" let-modal>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">{{productdetail.produtoDescricao}}</h4>
+      <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"
+        (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+        <!-- Product gallery-->
+        <div class="col-lg-7 col-md-6 pe-lg-0"><img src="{{productdetail.produtoImagem}}" alt="{{productdetail.produtoDescricao}"></div>
+        <!-- Product details-->
+        <div class="col-lg-5 col-md-6 pt-4 pt-lg-0">
+          <div class="product-details ms-auto pb-3">
+            <div class="mb-3"><span class="h3 fw-normal text-accent me-1">{{productdetail.produtoValor | currency:'BRL'}}</span></div>
+            <form class="mb-grid-gutter">
+              <div class="mb-3 d-flex align-items-center">
+                <select class="form-select me-3" style="width: 5rem;">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+                <button class="btn btn-primary btn-shadow d-block w-100" type="submit"
+                  (click)="modal.dismiss('Cross click')" (click)="addcart(productdetail)"><i class="ci-cart fs-lg me-2"></i>Add ao Carrinho</button>
+              </div>
+            </form>
+            <h5 class="h6 mb-3 pb-3 border-bottom"><i
+                class="ci-announcement text-muted fs-lg align-middle mt-n1 me-2"></i>Informações do Produto</h5>
+            <h6 class="fs-sm mb-2">Ingredientes:</h6>
+            <p class="fs-sm">{{productdetail.produtoIngredientes}}</p>
+            <h6 class="fs-sm mb-2">Alergias</h6>
+            <p class="fs-sm">{{productdetail.produtoAlergias}}</p>
+            <h6 class="fs-sm mb-2">Calorias</h6>
+            <p class="fs-sm mb-0">{{productdetail.produtoCalorias}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>

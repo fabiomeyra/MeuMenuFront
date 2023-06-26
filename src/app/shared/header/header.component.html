@@ -10,32 +10,32 @@
           <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
         </a>
         <div class="navbar-tool dropdown ms-3 cart"><a
-            class="navbar-tool-icon-box bg-secondary dropdown-toggle" routerLink="/cart"><span
+            class="navbar-tool-icon-box bg-secondary dropdown-toggle" routerLink="/carrinho"><span
               class="navbar-tool-label">{{carts.length}}</span><i class="navbar-tool-icon ci-cart"></i></a>
           <!-- Cart dropdown-->
           <div class="dropdown-menu dropdown-menu-end">
             <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
               <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
                 <div *ngFor="let cart of carts;let i = index" class="widget-cart-item pb-2 border-bottom">
-                  <button class="btn-close text-danger" type="button" aria-label="Remove" (click)="removecart(i)"><span
+                  <button class="btn-close text-danger" type="button" aria-label="Remove" (click)="removecart(i, cart)"><span
                       aria-hidden="true">&times;</span></button>
                   <div class="d-flex align-items-center"><a class="d-block" href="javascript:void(0);"><img
-                        src="{{cart.img}}" width="64" alt="Pizza"></a>
+                        src="{{cart.produtoImagem}}" width="64" alt="{{cart.produtoDescricao}}"></a>
                     <div class="ps-2">
-                      <h6 class="widget-product-title"><a href="javascript:void(0);">{{cart.title}}</a></h6>
-                      <div class="widget-product-meta"><span class="text-accent me-2">${{cart.price}}</span><span
-                          class="text-muted">x 1</span></div>
+                      <h6 class="widget-product-title"><a href="javascript:void(0);">{{cart.produtoDescricao}}</a></h6>
+                      <div class="widget-product-meta"><span class="text-accent me-2">{{cart.produtoValor | currency: "BRL"}}</span><span
+                          class="text-muted">x {{cart.qtd}}</span></div>
                     </div>
                   </div>
                 </div>
               </div>
               <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
                 <div class="fs-sm me-2 py-2"><span class="text-muted">Total:</span><span
-                    class="text-accent fs-base ms-1">${{calculatetotal(total)}}</span></div><a
-                  class="btn btn-outline-secondary btn-sm" href="javascript:void(0);" routerLink="/cart">Expand cart<i
+                    class="text-accent fs-base ms-1">{{calculatetotal(total) | currency: "BRL"}}</span></div><a
+                  class="btn btn-outline-secondary btn-sm" href="javascript:void(0);" routerLink="/carrinho">Expandir Carrinho<i
                     class="ci-arrow-right ms-1 me-n1"></i></a>
               </div><a class="btn btn-primary btn-sm d-block w-100" href="javascript:void(0);" routerLink="/checkout"><i
-                  class="ci-card me-2 fs-base align-middle"></i>Checkout</a>
+                  class="ci-card me-2 fs-base align-middle"></i>Finalizar</a>
             </div>
           </div>
         </div>
@@ -134,7 +134,7 @@
       <span class="handheld-toolbar-icon"><i class="ci-menu"></i></span>
       <span class="handheld-toolbar-label">Menu</span>
     </a>
-    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/cart">
+    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/carrinho">
       <span class="handheld-toolbar-icon"><i class="ci-cart"></i>
         <span class="badge bg-primary rounded-pill ms-1">{{carts.length}}</span>
       </span>

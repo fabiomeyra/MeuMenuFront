@@ -29,7 +29,6 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.produtoService.getCategorias().subscribe(
       (response) => {
-        console.log("-- response: ", response);
         this.category = response
       },
       (error: HttpErrorResponse) => {

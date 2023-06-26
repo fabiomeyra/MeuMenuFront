@@ -18,7 +18,7 @@
     <p class="text-muted text-center mb-5"></p>
     <div class="row">
         <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
-            <a class="card border-0 shadow" routerLink="/category/{{cat.categoriaId}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
+            <a class="card border-0 shadow" routerLink="/categoria/{{cat.categoriaId}}/{{cat.categoriaDescricao}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
                     alt="Burgers &amp; Fries">
                 <div class="card-body py-4 text-center">
                     <h3 class="h5 mt-1">{{cat.categoriaDescricao}}</h3>

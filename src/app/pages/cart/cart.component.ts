@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { cartdata } from './data';
+import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,26 +11,31 @@ import { cartdata } from './data';
 export class CartComponent implements OnInit {
 
   formData!: UntypedFormGroup;
-  qty: any = 1;
+  qtd: any = 1;
   cartproduct: any;
   totalprice: any = 0;
   submitted = false;
 
-  constructor(public formBuilder: UntypedFormBuilder) { }
+  constructor(
+    public formBuilder: UntypedFormBuilder,
+    public carrinhoService: CarrinhoService,
+  ) { }
 
   ngOnInit(): void {
 
-    // Validation
-    this.formData = this.formBuilder.group({
-      promocode: ['', [Validators.required]],
+    this.cartproduct = this.carrinhoService.produtos;
+    this.cartproduct.forEach((element: any) => {
+      element['total'] = element.produtoValor
+      element['qtd'] = 1
+      this.totalprice += parseFloat(element.produtoValor)
     });
 
-    this.cartproduct = cartdata
-    this.cartproduct.forEach((element: any) => {
-      element['total'] = element.price
-      element['qty'] = 1
-      this.totalprice += parseFloat(element.price)
-    });
+    this.atualizarCarrinho();
+  }
+
+  atualizarCarrinho() {
+    this.carrinhoService.produtos = this.cartproduct;
+    this.carrinhoService.salvarCarrinho();
   }
 
   /**
@@ -40,29 +46,24 @@ export class CartComponent implements OnInit {
   }
 
   calculatetotal(i: any, ev: any) {
-    this.qty = ev.target.value
-    this.cartproduct[i].total = parseFloat(this.cartproduct[i].price) * this.qty
+    this.qtd = ev.target.value
+    this.cartproduct[i].total = parseFloat(this.cartproduct[i].produtoValor) * this.qtd
 
-    if (this.cartproduct[i].qty > this.qty) {
-      this.totalprice -= parseFloat(this.cartproduct[i].price)
+    if (this.cartproduct[i].qtd > this.qtd) {
+      this.totalprice -= parseFloat(this.cartproduct[i].produtoValor)
     } else {
-      this.totalprice += parseFloat(this.cartproduct[i].price)
+      this.totalprice += parseFloat(this.cartproduct[i].produtoValor)
     }
-    this.cartproduct[i].qty = this.qty
+    this.cartproduct[i].qtd = this.qtd;
+    this.atualizarCarrinho();
   }
 
   removecart(i: any) {
     this.totalprice -= parseFloat(this.cartproduct[i].total)
-    this.cartproduct.splice(i, 1)
+    this.carrinhoService.removerProduto(i);
   }
 
   setprice(price: any) {
     return price.toFixed(2)
   }
-
-  applycode() {
-    this.submitted = true
-  }
-
-
 }

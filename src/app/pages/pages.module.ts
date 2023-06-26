@@ -11,8 +11,7 @@ import { SwiperModule } from 'ngx-swiper-wrapper';
 import { SWIPER_CONFIG } from 'ngx-swiper-wrapper';
 import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
-import { CategoryComponent } from './category/category.component';
-import { RestaurantsComponent } from './restaurants/restaurants.component';
+import { CategoriasComponent } from './categorias/categorias.component';
 import { IndexComponent } from './index/index.component';
 
 import { NgbRatingModule, NgbDropdownModule, NgbTooltipModule, NgbProgressbarModule} from '@ng-bootstrap/ng-bootstrap';
@@ -32,8 +31,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
 
 @NgModule({
   declarations: [
-    CategoryComponent,
-    RestaurantsComponent,
+    CategoriasComponent,
     IndexComponent,
     CartComponent,
     CheckoutComponent,

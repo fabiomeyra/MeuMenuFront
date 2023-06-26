@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
 import { cartdata } from 'src/app/pages/cart/data';
+import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
 
 
 @Component({
@@ -27,18 +28,21 @@ export class HeaderComponent implements OnInit {
   total: any = 0;
   term:any;
   
-  constructor(public formBuilder: UntypedFormBuilder,
+  constructor(
+    public formBuilder: UntypedFormBuilder,
     private modalService: NgbModal,
     public translate: TranslateService,
-    public router: Router) {
+    public router: Router,
+    public carrinhoService: CarrinhoService,
+    ) {
       translate.setDefaultLang('en');
   }
 
   ngOnInit(): void {
 
-    this.selectedLocation = 'New York',
-      this.carts = cartdata
+    this.selectedLocation = 'New York';
 
+    this.carts = this.carrinhoService.produtos;
 
     // Validation
     this.formData = this.formBuilder.group({
@@ -59,7 +63,7 @@ export class HeaderComponent implements OnInit {
   calculatetotal(total: any) {
     this.total = 0
     this.carts.forEach((element: any) => {
-      this.total += parseFloat(element.price)
+      this.total += parseFloat(element.produtoValor) * parseFloat(element.qtd)
     });
     return this.total.toFixed(2)
   }
@@ -137,10 +141,10 @@ export class HeaderComponent implements OnInit {
   }
 
   // remove from cart
-  removecart(i: any) {
-    this.total -= parseFloat(this.carts[i].price)
+  removecart(i: any, produto: any) {
+    this.total -= parseFloat(this.carts[i].produtoValor)
     this.total = this.total.toFixed(2)
-    this.carts.splice(i, 1)
+    this.carrinhoService.removerProduto(i);
   }
   
 
