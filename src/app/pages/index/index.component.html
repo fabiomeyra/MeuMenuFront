@@ -14,14 +14,14 @@
 </section> -->
 <!-- Categories (cuisine) grid-->
 <section class="container py-4 my-lg-3 py-sm-5" id="cuisine">
-    <h2 class="text-center pt-4 pt-sm-3">O que vai comer hoje?</h2>
+    <h2 class="text-center pt-4 pt-sm-3">O que você vai comer hoje?</h2>
     <p class="text-muted text-center mb-5"></p>
     <div class="row">
         <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
-            <a class="card border-0 shadow" routerLink="/category"><img class="card-img-top" src="{{cat.img}}"
+            <a class="card border-0 shadow" routerLink="/category/{{cat.categoriaId}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
                     alt="Burgers &amp; Fries">
                 <div class="card-body py-4 text-center">
-                    <h3 class="h5 mt-1">{{cat.title}}</h3>
+                    <h3 class="h5 mt-1">{{cat.categoriaDescricao}}</h3>
                 </div>
             </a>
         </div>

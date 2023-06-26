@@ -5,6 +5,8 @@ import { categoryData, resturants, Reviews } from './data';
 import { SwiperComponent, SwiperDirective } from 'ngx-swiper-wrapper';
 import { SwiperOptions } from 'swiper';
 import { Router } from '@angular/router';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-index',
@@ -19,12 +21,23 @@ export class IndexComponent implements OnInit {
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
 
-  constructor(public router: Router) { }
+  constructor(
+    public router: Router,
+    private produtoService: ProdutoService,
+  ) { }
 
   ngOnInit(): void {
-    this.category = categoryData
-    this.restaurants = resturants
-    this.review = Reviews
+    this.produtoService.getCategorias().subscribe(
+      (response) => {
+        console.log("-- response: ", response);
+        this.category = response
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+        }
+      }
+    );
 
     document.querySelector('.cart')?.classList.add('d-none')
   }
