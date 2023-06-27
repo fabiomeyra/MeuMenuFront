@@ -16,6 +16,10 @@ export class ProdutoService {
     return this.http.get(`${this.environment.apiProdutoUrl}/categoria/obter-todos`);
   }
 
+  getProdutos(): Observable<any> {
+    return this.http.get(`${this.environment.apiProdutoUrl}/produto/obter-todos`);
+  }
+
   getProdutosPorCategoria(id: any): Observable<any> {
     return this.http.get(`${this.environment.apiProdutoUrl}/produto/obter-por-categoria/${id}`);
   }
