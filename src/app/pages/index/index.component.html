@@ -17,6 +17,7 @@
     <h2 class="text-center pt-4 pt-sm-3">O que você vai comer hoje?</h2>
     <p class="text-muted text-center mb-5"></p>
     <div class="row">
+        <app-loading *ngIf="isLoading"></app-loading>
         <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
             <a class="card border-0 shadow" routerLink="/categoria/{{cat.categoriaId}}/{{cat.categoriaDescricao}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
                     alt="Burgers &amp; Fries">

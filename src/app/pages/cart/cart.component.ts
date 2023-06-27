@@ -24,10 +24,14 @@ export class CartComponent implements OnInit {
   ngOnInit(): void {
 
     this.cartproduct = this.carrinhoService.produtos;
-    this.cartproduct.forEach((element: any) => {
+    this.cartproduct.forEach((element: any, index: any) => {
       element['total'] = element.produtoValor
-      element['qtd'] = 1
-      this.totalprice += parseFloat(element.produtoValor)
+
+      if (!element.qtd) {
+        element['qtd'] = 1
+      }
+
+      this.totalprice += parseFloat(element.produtoValor) * parseFloat(element.qtd)
     });
 
     this.atualizarCarrinho();
@@ -46,14 +50,14 @@ export class CartComponent implements OnInit {
   }
 
   calculatetotal(i: any, ev: any) {
-    this.qtd = ev.target.value
+    this.qtd = ev.target.value;
     this.cartproduct[i].total = parseFloat(this.cartproduct[i].produtoValor) * this.qtd
 
-    if (this.cartproduct[i].qtd > this.qtd) {
+    if (this.cartproduct[i].qtd > this.qtd) 
       this.totalprice -= parseFloat(this.cartproduct[i].produtoValor)
-    } else {
+    else
       this.totalprice += parseFloat(this.cartproduct[i].produtoValor)
-    }
+
     this.cartproduct[i].qtd = this.qtd;
     this.atualizarCarrinho();
   }

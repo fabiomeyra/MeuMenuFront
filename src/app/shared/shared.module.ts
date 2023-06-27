@@ -10,6 +10,7 @@ import { ScrollToModule } from '@nicky-lenaers/ngx-scroll-to';
 // component
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
+import { LoadingComponent } from './loading/loading.component';
 import { SignmodalComponent } from './signmodal/signmodal.component';
 import { LanguageService } from '../services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
@@ -19,7 +20,8 @@ import { TranslateModule } from '@ngx-translate/core';
   declarations: [
     HeaderComponent,
     FooterComponent,
-    SignmodalComponent
+    SignmodalComponent,
+    LoadingComponent,
   ],
   imports: [
     CommonModule,
@@ -36,6 +38,7 @@ import { TranslateModule } from '@ngx-translate/core';
   exports: [
     HeaderComponent,
     FooterComponent,
+    LoadingComponent,
   ]
 })
 export class SharedModule { }

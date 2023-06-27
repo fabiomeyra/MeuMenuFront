@@ -17,6 +17,7 @@ export class IndexComponent implements OnInit {
   category: any;
   restaurants: any;
   review: any;
+  isLoading: boolean = true;
 
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
@@ -29,11 +30,13 @@ export class IndexComponent implements OnInit {
   ngOnInit(): void {
     this.produtoService.getCategorias().subscribe(
       (response) => {
-        this.category = response
+        this.category = response.data
+        this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
           console.log("-- error: ", error);
+          this.isLoading = false;
         }
       }
     );

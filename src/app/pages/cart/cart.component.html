@@ -32,7 +32,7 @@
             </div>
             <div class="pt-2 pt-sm-0 ps-sm-3 mx-auto mx-sm-0 text-center text-sm-start" style="max-width: 9rem;">
               <label class="form-label" for="quantity1">Quantidade</label>
-              <input class="form-control" type="number" id="quantity0" value="1" min="1" (change)="calculatetotal(i,$event)">
+              <input class="form-control" type="number" id="quantity0" value="{{cart.qtd}}" min="1" (change)="calculatetotal(i,$event)">
               <button class="btn btn-link px-0 text-danger" type="button" (click)="removecart(i)"><i class="ci-close-circle me-2"></i><span
                   class="fs-sm">Remover</span></button>
             </div>

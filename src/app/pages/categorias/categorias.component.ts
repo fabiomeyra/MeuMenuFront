@@ -18,6 +18,7 @@ export class CategoriasComponent implements OnInit {
   productdetail: any;
   id!: string;
   descricao!: string;
+  isLoading: boolean = true;
 
   constructor(
     private modalService: NgbModal,
@@ -33,11 +34,13 @@ export class CategoriasComponent implements OnInit {
 
       this.produtoService.getProdutosPorCategoria(this.id).subscribe(
         (response) => {
-          this.products = response
+          this.products = response.data
+          this.isLoading = false;
         },
         (error: HttpErrorResponse) => {
           if (error instanceof HttpErrorResponse) {
             console.log("-- error: ", error);
+            this.isLoading = false;
           }
         }
       );

@@ -15,6 +15,7 @@
 <!-- Menu (Products grid)-->
 <section class="container tab-content py-4 py-sm-5">
   <div class="row pt-3 pt-sm-0">
+    <app-loading *ngIf="isLoading"></app-loading>
     <!-- Item-->
     <div *ngFor="let item of products;let i = index;" class="col-lg-3 col-md-4 col-sm-6 mb-grid-gutter">
       <div class="card product-card border pb-2"><a class="d-block" data-bs-target="#quick-view" data-bs-toggle="modal"
