@@ -1,5 +1,6 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -8,37 +9,50 @@ import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms
 })
 export class ListaProdutosComponent implements OnInit {
 
-  formData!: UntypedFormGroup;
-  submitted = false;
+  produtos: any;
+  categorias: any;
+  isLoading = false;
 
-  constructor(public formBuilder: UntypedFormBuilder) { }
+  constructor(
+    public produtoService: ProdutoService,
+  ) { }
 
   ngOnInit(): void {
 
-    
-    // Validation
-    this.formData = this.formBuilder.group({
-      name: ['', [Validators.required]],
-      phone: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      comment: ['', [Validators.required]],
-      change: ['', [Validators.required]],
-      deliverytime: ['', [Validators.required]],
-      city: ['', [Validators.required]]
-    });
+    this.isLoading = true;
+
+    this.produtoService.getProdutos().subscribe(
+      (response) => {
+        this.produtos = response.data
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+          this.isLoading = false;
+        }
+      }
+    );
+
+    this.produtoService.getCategorias().subscribe(
+      (response) => {
+        this.categorias = response.data
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+        }
+      }
+    );
   }
 
-  
-  /**
-* Returns form
-*/
-get form() {
-  return this.formData.controls;
-}
+  editar(produto: any) {
+    console.log("-- produto: ", produto);
+  }
 
-
-completeorder() {
-  this.submitted = true
-}
-
+  changeCategoria(event: any) {
+    console.log('--event:', event);
+    const valorSelecionado = event.target.value;
+    console.log('Opção selecionada:', valorSelecionado);
+  }
 }
