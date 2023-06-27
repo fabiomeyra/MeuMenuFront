@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-// component
-// import { IndexComponent } from './home/index/index.component';
 import { IndexComponent } from './index/index.component';
 import { CategoriasComponent } from './categorias/categorias.component';
 import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
+import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 
 const routes: Routes = [
   {
@@ -20,6 +20,12 @@ const routes: Routes = [
   },
   {
     path: 'checkout', component: CheckoutComponent
+  },
+  {
+    path: 'produtos', component: ListaProdutosComponent
+  },
+  {
+    path: 'cadastrar-produto', component: CadastroProdutosComponent
   },
 ];
 

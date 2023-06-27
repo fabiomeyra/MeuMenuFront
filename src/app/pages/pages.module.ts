@@ -22,6 +22,9 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
+import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
+import { NgxCurrencyModule } from 'ngx-currency';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -35,6 +38,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     IndexComponent,
     CartComponent,
     CheckoutComponent,
+    ListaProdutosComponent,
+    CadastroProdutosComponent,
   ],
   imports: [
     CommonModule,
@@ -48,6 +53,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ReactiveFormsModule,
     NgbTooltipModule, 
     NgbProgressbarModule,
+    NgxCurrencyModule,
     ScrollToModule.forRoot()
   ],
 

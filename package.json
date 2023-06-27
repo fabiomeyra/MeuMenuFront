@@ -26,6 +26,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.2.2",
     "ngx-cookie-service": "^14.0.1",
+    "ngx-currency": "^3.0.0",
     "ngx-swiper-wrapper": "^10.0.0",
     "rxjs": "~7.5.0",
     "swiper": "^6.8.0",
