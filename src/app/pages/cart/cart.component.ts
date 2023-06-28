@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
-import { cartdata } from './data';
 import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
 
 @Component({
@@ -10,43 +8,36 @@ import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
 })
 export class CartComponent implements OnInit {
 
-  formData!: UntypedFormGroup;
   qtd: any = 1;
   cartproduct: any;
   totalprice: any = 0;
   submitted = false;
+  observacoes = "";
 
   constructor(
-    public formBuilder: UntypedFormBuilder,
     public carrinhoService: CarrinhoService,
   ) { }
 
   ngOnInit(): void {
+    this.iniciarCarrinho();
+    this.atualizarCarrinho();
+  }
 
+  iniciarCarrinho() {
     this.cartproduct = this.carrinhoService.produtos;
     this.cartproduct.forEach((element: any, index: any) => {
-      element['total'] = element.produtoValor
-
       if (!element.qtd) {
         element['qtd'] = 1
       }
 
+      element['total'] = parseFloat(element.produtoValor) * parseFloat(element.qtd)
       this.totalprice += parseFloat(element.produtoValor) * parseFloat(element.qtd)
     });
-
-    this.atualizarCarrinho();
   }
 
   atualizarCarrinho() {
     this.carrinhoService.produtos = this.cartproduct;
     this.carrinhoService.salvarCarrinho();
-  }
-
-  /**
-* Returns form
-*/
-  get form() {
-    return this.formData.controls;
   }
 
   calculatetotal(i: any, ev: any) {
@@ -69,5 +60,16 @@ export class CartComponent implements OnInit {
 
   setprice(price: any) {
     return price.toFixed(2)
+  }
+
+  finalizarPedido() {
+    // chamar api
+
+    console.log("-- carrinho ", this.carrinhoService.produtos);
+    console.log("-- obs ", this.observacoes);
+    this.carrinhoService.limparCarrinho();
+    this.iniciarCarrinho();
+    this.totalprice = 0;
+    this.observacoes = "";
   }
 }

@@ -11,9 +11,6 @@
       <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0);"
           data-bs-toggle="tab" role="tab" aria-selected="true">1. Seu pedido</a>
       </li>
-      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4" href="javascript:void(0);" routerLink="/checkout"
-          data-bs-toggle="tab" role="tab" aria-selected="true">2. Checkout</a>
-      </li>
     </ul>
 
     <div class="px-3 px-sm-4 px-xl-5 pt-1 pb-4 pb-sm-5">
@@ -47,11 +44,11 @@
             </div>
             <div class="mb-4">
               <label class="form-label mb-3" for="order-comments"><span
-                  class="badge bg-info fs-xs me-2">Note</span>Additional comments</label>
-              <textarea class="form-control" rows="4" id="order-comments"></textarea>
+                  class="badge bg-info fs-xs me-2">Obs</span>Adicionar Observações</label>
+              <textarea class="form-control" rows="4" [(ngModel)]="observacoes"></textarea>
             </div>
             <a class="btn btn-primary btn-shadow d-block w-100 mt-4 mb-3" href="javascript:void(0);"
-              routerLink="/checkout"><i class="ci-card fs-lg me-2"></i>Proceed to Checkout</a>
+              (click)="finalizarPedido()"><i class="ci-card fs-lg me-2"></i>Finalizar Pedido</a>
           </div>
         </div>
       </div>

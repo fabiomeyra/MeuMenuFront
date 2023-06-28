@@ -22,6 +22,11 @@ export class CarrinhoService {
     }
   }
 
+  limparCarrinho() {
+    this.produtos = [];
+    this.salvarCarrinho();
+  }
+
   salvarCarrinho() {
     localStorage.setItem('carrinho', JSON.stringify(this.produtos));
   }
