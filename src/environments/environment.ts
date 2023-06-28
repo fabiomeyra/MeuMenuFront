@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   apiProdutoUrl: 'https://api-produto.azurewebsites.net/api',
-  apiUsuarioUrl: 'https://api-produto.azurewebsites.net/api',
-  apiPedidoUrl: 'https://api-produto.azurewebsites.net/api',
+  apiUsuarioUrl: 'https://api-usuario.azurewebsites.net/api',
+  apiPedidoUrl: 'https://api-pedido.azurewebsites.net/api',
 };
 
 /*

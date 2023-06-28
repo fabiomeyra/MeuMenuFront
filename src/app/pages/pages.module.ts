@@ -25,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -40,6 +41,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CheckoutComponent,
     ListaProdutosComponent,
     CadastroProdutosComponent,
+    AcompanhamentoPedidoClienteComponent,
   ],
   imports: [
     CommonModule,
