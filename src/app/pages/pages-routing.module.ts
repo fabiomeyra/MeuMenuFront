@@ -27,6 +27,9 @@ const routes: Routes = [
   {
     path: 'cadastrar-produto', component: CadastroProdutosComponent
   },
+  {
+    path: 'editar-produto/:produto', component: CadastroProdutosComponent
+  },
 ];
 
 @NgModule({

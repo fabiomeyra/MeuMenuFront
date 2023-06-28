@@ -1,5 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 
 @Component({
@@ -17,6 +18,7 @@ export class ListaProdutosComponent implements OnInit {
 
   constructor(
     public produtoService: ProdutoService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -74,7 +76,8 @@ export class ListaProdutosComponent implements OnInit {
   }
 
   alterarProduto(produto: any) {
-    this.produtoEdit = produto;
+    const dadosSerializados = encodeURIComponent(JSON.stringify(produto.produtoId));
+    this.router.navigate(['/editar-produto', dadosSerializados]);
   }
 
   deletarProduto(produto: any) {

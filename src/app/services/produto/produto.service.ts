@@ -24,6 +24,10 @@ export class ProdutoService {
     return this.http.get(`${this.environment.apiProdutoUrl}/produto/obter-por-categoria/${id}`);
   }
 
+  getProdutoPorId(id: any): Observable<any> {
+    return this.http.get(`${this.environment.apiProdutoUrl}/produto/${id}`);
+  }
+
   cadastrarProduto(produto: any): Observable<any> {
     return this.http.post(`${this.environment.apiProdutoUrl}/produto`, produto);
   }
@@ -32,7 +36,7 @@ export class ProdutoService {
     return this.http.delete(`${this.environment.apiProdutoUrl}/produto/${produtoId}`);
   }
 
-  alterarProduto(produto: any): Observable<any> {
-    return this.http.put(`${this.environment.apiProdutoUrl}/produto/${produto.produtoId}`, produto);
+  alterarProduto(produto: any, produtoId: any): Observable<any> {
+    return this.http.put(`${this.environment.apiProdutoUrl}/produto/${produtoId}`, produto);
   }
 }

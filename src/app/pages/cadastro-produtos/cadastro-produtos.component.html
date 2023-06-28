@@ -1,79 +1,90 @@
 <app-header></app-header>
 <div class="container pt-4 pb-3 py-sm-4">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
-            <li class="breadcrumb-item"><a class="text-nowrap" routerLink="/"><i class="ci-home"></i>Home</a></li>
-            <li class="breadcrumb-item text-nowrap active" aria-current="page">Produtos</li>
-        </ol>
-    </nav>
-    <div class="rounded-3 shadow-lg mt-4 mb-5" >
-        <ul class="nav nav-tabs nav-justified mb-sm-4">
-            <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4" href="javascript:void(0)" routerLink="/produtos">Produtos Cadastrados</a></li>
-            <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0)">Cadastrar Produto</a></li>
-        </ul>
-        <app-loading *ngIf="isLoading"></app-loading>
-        <form (ngSubmit)="cadastrarProduto()" [formGroup]="formData" class="needs-validation px-3 px-sm-4 px-xl-5 pt-sm-1 pb-4 pb-sm-5" *ngIf="!isLoading">
-            <div class="row pb-4 pt-3">
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-name">Descrição<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="text" required id="fd-descricao" formControlName="descricao"
-                        [ngClass]="{ 'is-invalid': submitted && form['descricao'].errors }">
-                    <div class="invalid-feedback">Informe a descrição do produto!</div>
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <div class="fs-sm fw-medium mb-3">Status<sup class="text-danger ms-1">*</sup></div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" formControlName="status" checked id="ativo" value="true">
-                        <label class="form-check-label" for="ativo">Ativo</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="radio" name="status" formControlName="status" id="inativo" value="false">
-                        <label class="form-check-label" for="inativo">Inativo</label>
-                    </div>
-                    <div class="invalid-feedback">Informe o status!</div>
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-name">Valor<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="text" required id="fd-valor" formControlName="valor"
-                        [ngClass]="{ 'is-invalid': submitted && form['valor'].errors }" currencyMask [options]="{ align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }">
-                    <div class="invalid-feedback">Informe o valor do produto!</div>
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-name">Ingredientes<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="text" required id="fd-ingredientes" formControlName="ingredientes"
-                        [ngClass]="{ 'is-invalid': submitted && form['ingredientes'].errors }">
-                    <div class="invalid-feedback">Informe os ingredientes do produto!</div>
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-name">Calorias<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="number" required id="fd-calorias" formControlName="calorias"
-                    [ngClass]="{ 'is-invalid': submitted && form['calorias'].errors }">
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-name">Alergias<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="text" required id="fd-alergias" formControlName="alergias"
-                    [ngClass]="{ 'is-invalid': submitted && form['alergias'].errors }">
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-categoria">Categoria<sup class="text-danger ms-1">*</sup></label>
-                    <select class="form-select" id="fd-categoria" formControlName="categoria"
-                        [ngClass]="{ 'is-invalid': submitted && form['categoria'].errors }">
-                        <option *ngFor="let categoria of categorias" [value]="categoria.categoriaId">{{ categoria.categoriaDescricao }}</option>
-                    </select>
-                    <div class="invalid-feedback">Informe a categoria!</div>
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label class="form-label" for="fd-imagem">Imagem<sup class="text-danger ms-1">*</sup></label>
-                    <input class="form-control" type="file" required id="fd-imagem" formControlName="imagem"
-                    [ngClass]="{ 'is-invalid': submitted && form['imagem'].errors }" (change)="onFileSelected($event)">
-                </div>
-            </div>
-            <div class="row justify-content-center">
-                <div class="col-sm-6 mb-4 mb-sm-0">
-                    <button class="btn btn-primary d-block w-100 mt-3" type="submit" [disabled]="!formData.valid">Cadastrar</button>
-                </div>
-            </div>
-        </form>
-    </div>
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+      <li class="breadcrumb-item"><a class="text-nowrap" routerLink="/"><i class="ci-home"></i>Home</a></li>
+      <li class="breadcrumb-item text-nowrap active" aria-current="page">Produtos</li>
+    </ol>
+  </nav>
+  <div class="rounded-3 shadow-lg mt-4 mb-5">
+    <ul class="nav nav-tabs nav-justified mb-sm-4">
+      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4" href="javascript:void(0)"
+          routerLink="/produtos">Produtos Cadastrados</a></li>
+      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0)">Cadastrar
+          Produto</a></li>
+    </ul>
+    <app-loading *ngIf="isLoading"></app-loading>
+    <form (ngSubmit)="salvar()" [formGroup]="formData"
+      class="needs-validation px-3 px-sm-4 px-xl-5 pt-sm-1 pb-4 pb-sm-5" *ngIf="!isLoading">
+      <div class="row pb-4 pt-3">
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-name">Descrição<sup class="text-danger ms-1">*</sup></label>
+          <input class="form-control" type="text" required id="fd-descricao" formControlName="produtoDescricao"
+            [ngClass]="{ 'is-invalid': submitted && form['produtoDescricao'].errors }">
+          <div class="invalid-feedback">Informe a descrição do produto!</div>
+        </div>
+        <div class="col-sm-6 mb-4">
+          <div class="fs-sm fw-medium mb-3">Status<sup class="text-danger ms-1">*</sup></div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="produtoAtivo" formControlName="produtoAtivo" checked
+              id="ativo" value="true">
+            <label class="form-check-label" for="ativo">Ativo</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="produtoAtivo" formControlName="produtoAtivo" id="inativo"
+              value="false">
+            <label class="form-check-label" for="inativo">Inativo</label>
+          </div>
+          <div class="invalid-feedback">Informe o status!</div>
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-name">Valor<sup class="text-danger ms-1">*</sup></label>
+          <input class="form-control" type="text" required id="fd-valor" formControlName="produtoValor"
+            [ngClass]="{ 'is-invalid': submitted && form['produtoValor'].errors }" currencyMask
+            [options]="{ align: 'left', prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          <div class="invalid-feedback">Informe o valor do produto!</div>
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-name">Ingredientes<sup class="text-danger ms-1">*</sup></label>
+          <input class="form-control" type="text" required id="fd-ingredientes" formControlName="produtoIngredientes"
+            [ngClass]="{ 'is-invalid': submitted && form['produtoIngredientes'].errors }">
+          <div class="invalid-feedback">Informe os ingredientes do produto!</div>
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-name">Calorias<sup class="text-danger ms-1">*</sup></label>
+          <input class="form-control" type="number" required id="fd-calorias" formControlName="produtoCalorias"
+            [ngClass]="{ 'is-invalid': submitted && form['produtoCalorias'].errors }">
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-name">Alergias<sup class="text-danger ms-1">*</sup></label>
+          <input class="form-control" type="text" required id="fd-alergias" formControlName="produtoAlergias"
+            [ngClass]="{ 'is-invalid': submitted && form['produtoAlergias'].errors }">
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-categoria">Categoria<sup class="text-danger ms-1">*</sup></label>
+          <select class="form-select" id="fd-categoria" formControlName="categoriaId"
+            [ngClass]="{ 'is-invalid': submitted && form['categoriaId'].errors }">
+            <option *ngFor="let categoria of categorias" [value]="categoria.categoriaId">{{
+              categoria.categoriaDescricao }}</option>
+          </select>
+          <div class="invalid-feedback">Informe a categoria!</div>
+        </div>
+        <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-imagem">Imagem</label>
+          <input class="form-control" type="file" id="fd-imagem" formControlName="produtoImagem"
+            (change)="onFileSelected($event)">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 mb-4 mb-sm-0">
+          <button class="btn btn-primary d-block w-100 mt-3" type="submit"
+            [disabled]="!formData.valid">Salvar</button>
+        </div>
+        <div class="col-sm-6 mb-4 mb-sm-0">
+          <button class="btn btn-secondary d-block w-100 mt-3" routerLink="/produtos">Cancelar</button>
+        </div>
+      </div>
+    </form>
+  </div>
 </div>
 <app-footer></app-footer>
