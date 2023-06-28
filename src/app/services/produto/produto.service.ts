@@ -27,4 +27,12 @@ export class ProdutoService {
   cadastrarProduto(produto: any): Observable<any> {
     return this.http.post(`${this.environment.apiProdutoUrl}/produto`, produto);
   }
+
+  deletarProduto(produtoId: any): Observable<any> {
+    return this.http.delete(`${this.environment.apiProdutoUrl}/produto/${produtoId}`);
+  }
+
+  alterarProduto(produto: any): Observable<any> {
+    return this.http.put(`${this.environment.apiProdutoUrl}/produto/${produto.produtoId}`, produto);
+  }
 }

@@ -12,27 +12,15 @@ export class ListaProdutosComponent implements OnInit {
   produtos: any;
   categorias: any;
   isLoading = false;
+  categoriaSelecionada = 0;
+  produtoEdit: any;
 
   constructor(
     public produtoService: ProdutoService,
   ) { }
 
   ngOnInit(): void {
-
-    this.isLoading = true;
-
-    this.produtoService.getProdutos().subscribe(
-      (response) => {
-        this.produtos = response.data
-        this.isLoading = false;
-      },
-      (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
-          this.isLoading = false;
-        }
-      }
-    );
+    this.obterTodosProdutos();
 
     this.produtoService.getCategorias().subscribe(
       (response) => {
@@ -46,13 +34,67 @@ export class ListaProdutosComponent implements OnInit {
     );
   }
 
-  editar(produto: any) {
-    console.log("-- produto: ", produto);
+  carregarProdutos() {
+    if (this.categoriaSelecionada == 0)
+      this.obterTodosProdutos();
+    else
+      this.obterProdutosPorCategoria(this.categoriaSelecionada);
+  }
+
+  obterTodosProdutos() {
+    this.isLoading = true;
+    this.produtoService.getProdutos().subscribe(
+      (response) => {
+        this.produtos = response.data
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+          this.isLoading = false;
+        }
+      }
+    );
+  }
+
+  obterProdutosPorCategoria(categoriaId: any) {
+    this.isLoading = true;
+    this.produtoService.getProdutosPorCategoria(categoriaId).subscribe(
+      (response) => {
+        this.produtos = response.data
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+          this.isLoading = false;
+        }
+      }
+    );
+  }
+
+  alterarProduto(produto: any) {
+    this.produtoEdit = produto;
+  }
+
+  deletarProduto(produto: any) {
+    this.isLoading = true;
+    this.produtoService.deletarProduto(produto.produtoId).subscribe(
+      (response) => {
+        this.carregarProdutos();
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse) {
+          console.log("-- error: ", error);
+          this.isLoading = false;
+        }
+      }
+    );
   }
 
   changeCategoria(event: any) {
-    console.log('--event:', event);
-    const valorSelecionado = event.target.value;
-    console.log('Opção selecionada:', valorSelecionado);
+    this.categoriaSelecionada = event.target.value;
+    this.carregarProdutos();
   }
 }
