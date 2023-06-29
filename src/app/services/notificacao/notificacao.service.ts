@@ -22,7 +22,7 @@ export class NotificacaoService {
   }
 
   mostrarMsgErro({errosApi, titulo, timeOut}: ParametrosErro | any) {
-    this.toastr.error(this.formatarMensagemDeErro(errosApi.errors) ||
+    this.toastr.error(this.formatarMensagemDeErro(errosApi?.errors) ||
       'Ocorreu um erro inesperado, por favor tente mais tarde ou entre em contato com o administrador do sistema',
       titulo || 'Ops!', { timeOut:  timeOut ? timeOut * 1000 : 0});
       this.moverTelaParaTopo();

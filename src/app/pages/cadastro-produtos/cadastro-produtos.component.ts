@@ -74,7 +74,7 @@ export class CadastroProdutosComponent implements OnInit {
         (error: HttpErrorResponse) => {
           this.isLoading = false;
           if (error instanceof HttpErrorResponse)
-            this.notificacaoService.mostrarMsgErro(error);
+            this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
         }
       );
     }
@@ -133,7 +133,7 @@ export class CadastroProdutosComponent implements OnInit {
         this.isLoading = false;
         this.submitted = false;
         if (error instanceof HttpErrorResponse)
-          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
+          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
       }
     );
   }
@@ -152,7 +152,7 @@ export class CadastroProdutosComponent implements OnInit {
         this.isLoading = false;
         this.submitted = false;
         if (error instanceof HttpErrorResponse)
-          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
+          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
       }
     );
   }

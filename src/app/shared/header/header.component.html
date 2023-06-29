@@ -36,14 +36,10 @@
             </div>
           </div>
         </div>
-        <a *ngIf="!usuarioEstaLogado" class="navbar-tool ms-2" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#showModal"
-          (click)="openModal()"><span class="navbar-tool-tooltip">Conta</span>
-          <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-        </a>
         <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool dropdown ms-3">
           <i class="navbar-tool-icon ci-user dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
           <div class="dropdown-menu dropdown-menu-end">
-            <a href="#" class="dropdown-item" (click)="logOut()">
+            <a class="dropdown-item" (click)="logOut()">
               Sair 
               <i class="navbar-tool-icon ci-forward"></i>
             </a>
@@ -54,8 +50,18 @@
         id="navbarCollapse">
         <!-- Primary menu-->
         <ul class="navbar-nav">
-          <li class="nav-item"><a class="nav-link" href="javascript:void(0);" routerLink="/">Voltar ao menu principal</a></li>
-            <li *ngIf="podeExibirAbaProdutos" class="nav-item"><a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Produtos</a></li>
+          <li *ngIf="usuarioService.ehUsuarioTipoPedido" class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" routerLink="/">Voltar ao menu principal</a>
+          </li>
+          <li class="nav-item" *ngIf="!usuarioService.ehUsuarioTipoPedido">
+            <a class="nav-link" href="javascript:void(0);" routerLink="/">Acompanhar pedidos</a>
+          </li>
+          <li *ngIf="podeExibirAbaProdutos && !usuarioService.ehUsuarioTipoPedido" class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Produtos</a>
+          </li>
+          <li *ngIf="podeExibirAbaProdutos && !usuarioService.ehUsuarioTipoPedido" class="nav-item">
+            <a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Usuários</a>
+          </li>
         </ul>
       </div>
     </div>

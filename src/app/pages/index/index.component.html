@@ -1,4 +1,4 @@
-<app-header></app-header>
+<app-header (onIsLoading)="tratarHeaderCarregando($event)"></app-header>
 <!-- Hero section-->
 <!-- <section class="bg-darker bg-size-cover bg-position-center py-5 py-lg-10"
     style="background-image: url(assets/img/food-delivery/hero-bg.jpg);">
@@ -14,18 +14,21 @@
 </section> -->
 <!-- Categories (cuisine) grid-->
 <section class="container py-4 my-lg-3 py-sm-5" id="cuisine">
-    <h2 class="text-center pt-4 pt-sm-3">O que você vai comer hoje?</h2>
+    <h2 *ngIf="!headerIsLoading" class="text-center pt-4 pt-sm-3">O que você vai comer hoje?</h2>
     <p class="text-muted text-center mb-5"></p>
     <div class="row">
-        <app-loading *ngIf="isLoading"></app-loading>
-        <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
-            <a class="card border-0 shadow" routerLink="/categoria/{{cat.categoriaId}}/{{cat.categoriaDescricao}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
-                    alt="Burgers &amp; Fries">
-                <div class="card-body py-4 text-center">
-                    <h3 class="h5 mt-1">{{cat.categoriaDescricao}}</h3>
-                </div>
-            </a>
+        <app-loading *ngIf="isLoading || headerIsLoading"></app-loading>
+        <div *ngIf="!isLoading && !headerIsLoading" class="row">
+            <div *ngFor="let cat of category" class="col-md-4 col-sm-6 mb-grid-gutter">
+                <a class="card border-0 shadow" routerLink="/categoria/{{cat.categoriaId}}/{{cat.categoriaDescricao}}"><img class="card-img-top" src="{{cat.categoriaImagem}}"
+                        alt="Burgers &amp; Fries">
+                    <div class="card-body py-4 text-center">
+                        <h3 class="h5 mt-1">{{cat.categoriaDescricao}}</h3>
+                    </div>
+                </a>
+            </div>
         </div>
+        
     </div>
 </section>
 <!-- Mobile app CTA-->

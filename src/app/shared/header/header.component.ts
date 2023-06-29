@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms';
 import { SignmodalComponent } from '../signmodal/signmodal.component';
@@ -8,6 +8,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { cartdata } from 'src/app/pages/cart/data';
 import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
+import { MesaPedidoService } from 'src/app/services/mesa-pedido/mesa-pedido.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 
 
 @Component({
@@ -16,6 +19,8 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  @Output() onIsLoading = new EventEmitter<boolean>();
 
   public isCollapsed = true;
   formData!: UntypedFormGroup;
@@ -34,7 +39,9 @@ export class HeaderComponent implements OnInit {
     private modalService: NgbModal,
     public translate: TranslateService,
     public router: Router,
-    private usuarioService: UsuarioService,
+    public usuarioService: UsuarioService,
+    private notificacaoService: NotificacaoService,
+    private mesaPedidoService: MesaPedidoService,
     public carrinhoService: CarrinhoService,
     ) {
       translate.setDefaultLang('en');
@@ -108,20 +115,27 @@ export class HeaderComponent implements OnInit {
     return this.signupformData.controls;
   }
 
-  /**
- * submit signin form
- */
-  signin() {
-    if (this.formData.valid) {
-      const message = this.formData.get('email')!.value;
-      const pwd = this.formData.get('password')!.value;
-      this.modalService.dismissAll();
-    }
-    this.submitted = true;
+  logOut() {
+
+    if(!this.mesaPedidoService.retornaMesaOcupada || 
+      this.mesaPedidoService.retornaMesaOcupada <= 0) return this.limparDadosUsuarioLogado();
+
+    this.onIsLoading.emit(true);
+    this.mesaPedidoService.desocuparMesa()
+      .subscribe(() => {
+        this.onIsLoading.emit(false);
+        this.limparDadosUsuarioLogado();
+      }, (error: HttpErrorResponse) => {
+        this.onIsLoading.emit(false);
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
+      })
+    
   }
 
-  logOut() {
+  limparDadosUsuarioLogado(){
     this.usuarioService.realizarLogOut();
+    this.router.navigate(['/login']);
   }
 
   // tslint:disable-next-line: typedef
@@ -149,7 +163,7 @@ export class HeaderComponent implements OnInit {
   }
   
   get podeExibirAbaProdutos() {
-    var usuario = this.usuarioService.retornaUsuario();
+    var usuario = this.usuarioService.getUsuario;
     return this.usuarioService.usuarioEstaLogado
       && usuario?.permissao === 'ADMIN';
   }

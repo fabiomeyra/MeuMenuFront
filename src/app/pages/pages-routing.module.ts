@@ -9,19 +9,23 @@ import { ListaProdutosComponent } from './lista-produtos/lista-produtos.componen
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 import AuthGuard from '../shared/guard/auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
   {
-    path: '', component: IndexComponent
+    path: '', component: IndexComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'login', component: LoginComponent, canActivate: [AuthGuard]
   },
   {
     path: 'categoria/:id/:descricao', component: CategoriasComponent
   },
   {
-    path: 'carrinho', component: CartComponent
+    path: 'carrinho', component: CartComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'checkout', component: CheckoutComponent
+    path: 'checkout', component: CheckoutComponent, canActivate: [AuthGuard]
   },
   {
     path: 'produtos', component: ListaProdutosComponent, canActivate: [AuthGuard]
@@ -33,7 +37,7 @@ const routes: Routes = [
     path: 'editar-produto/:produto', component: CadastroProdutosComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'acompanhar-pedido/:pedido', component: AcompanhamentoPedidoClienteComponent
+    path: 'acompanhar-pedido/:pedido', component: AcompanhamentoPedidoClienteComponent, canActivate: [AuthGuard]
   },
 ];
 

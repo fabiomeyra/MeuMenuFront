@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { categoryData, resturants, Reviews } from './data';
 
 // Swiper Slider
-import { SwiperComponent, SwiperDirective } from 'ngx-swiper-wrapper';
-import { SwiperOptions } from 'swiper';
-import { Router } from '@angular/router';
-import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { SwiperComponent, SwiperDirective } from 'ngx-swiper-wrapper';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { ProdutoService } from 'src/app/services/produto/produto.service';
 
 @Component({
   selector: 'app-index',
@@ -19,6 +18,7 @@ export class IndexComponent implements OnInit {
   restaurants: any;
   review: any;
   isLoading: boolean = true;
+  headerIsLoading: boolean = false;
 
   @ViewChild(SwiperComponent, { static: false }) componentRef?: SwiperComponent;
   @ViewChild(SwiperDirective, { static: false }) directiveRef?: SwiperDirective;
@@ -26,6 +26,7 @@ export class IndexComponent implements OnInit {
   constructor(
     public router: Router,
     private produtoService: ProdutoService,
+    private notificacaoService: NotificacaoService,
     private pedidoService: PedidoService
   ) {}
 
@@ -38,10 +39,9 @@ export class IndexComponent implements OnInit {
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log('-- error: ', error);
-          this.isLoading = false;
-        }
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
       }
     );
 
@@ -55,6 +55,10 @@ export class IndexComponent implements OnInit {
       );
       this.router.navigate(['/acompanhar-pedido', dadosSerializados]);
     }
+  }
+
+  tratarHeaderCarregando(valor: boolean){
+    this.headerIsLoading = valor;
   }
 
   godetail() {}

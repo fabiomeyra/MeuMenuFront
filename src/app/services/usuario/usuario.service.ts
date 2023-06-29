@@ -40,6 +40,20 @@ export class UsuarioService {
     localStorage.setItem('token_meu_menu', usuario.accessToken);
   }
 
+  definirUsuarioTipoPedido(): void {
+    var usuario = this.getUsuario;
+    if(!usuario) return;
+    usuario.ehUsuarioTipoPedido = true;
+    var usuarioToken = new UsuarioAccessTokenModel();
+    usuarioToken.user = usuario;
+    this.salvarUsuario(usuarioToken);
+  }
+
+  get ehUsuarioTipoPedido(): boolean {
+    var usuario = this.getUsuario;
+    return usuario?.ehUsuarioTipoPedido ?? false;
+  }
+
   get obterToken(): string | null | undefined {
     let token = localStorage.getItem('token_meu_menu')?.toString();
     return token;
@@ -47,11 +61,11 @@ export class UsuarioService {
 
   get usuarioEstaLogado() {
     let token = localStorage.getItem('token_meu_menu')?.toString();
-    let usuario = this.retornaUsuario();
+    let usuario = this.getUsuario;
     return token && usuario;
   }
 
-  retornaUsuario(): UsuarioModel | null {
+  get getUsuario(): UsuarioModel | null {
     let usuario = localStorage.getItem('usuario_meu_menu')?.toString() || null;
     if(!usuario) return null;
     return JSON.parse(usuario);
@@ -63,7 +77,7 @@ export class UsuarioService {
   }
 
   get retornaPermissaoUsuario(): string | null | undefined {
-    var usuario = this.retornaUsuario();
+    var usuario = this.getUsuario;
     return usuario?.permissao;
   }
 }

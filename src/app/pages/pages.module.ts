@@ -25,6 +25,7 @@ import AuthGuard from '../shared/guard/auth.guard';
 import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
+import { LoginComponent } from './login/login.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -41,6 +42,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     ListaProdutosComponent,
     CadastroProdutosComponent,
     AcompanhamentoPedidoClienteComponent,
+    LoginComponent
   ],
   imports: [
     CommonModule,

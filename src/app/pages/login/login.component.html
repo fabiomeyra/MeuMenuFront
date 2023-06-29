@@ -1,0 +1,51 @@
+<div class="container pt-4 pb-3 py-sm-4">
+    <ul ngbNav #nav="ngbNav" [activeId]="1" class="nav nav-tabs card-header-tabs flex-lg-nowrap justify-content-center" role="tablist">
+        <li class="nav-item" [ngbNavItem]="1">
+          <a ngbNavLink class="nav-link fw-medium" href="javascript:void(0);" data-bs-toggle="tab" role="tab"
+            aria-selected="true"><i class="ci-unlocked me-2 mt-n1"></i>Entrar</a>
+          <ng-template ngbNavContent>
+            <app-loading *ngIf="isLoading"></app-loading>
+            <form *ngIf="!isLoading" (ngSubmit)="signin()" [formGroup]="formData" class="needs-validation tab-pane fade show"
+              id="signin-tab">
+              <div class="mb-3">
+                <label class="form-label" for="si-login">Usuario</label>
+                <input class="form-control" type="text" id="si-login" placeholder="usuario"
+                  formControlName="login" [ngClass]="{ 'is-invalid': submitted && form['login'].errors }">
+                <div *ngIf="submitted && form['login'].errors" class="invalid-feedback">
+                  <span *ngIf="form['login'].errors['required']">Por gentileza informe o usuário</span>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="si-password">Senha</label>
+                <div class="password-toggle">
+                  <input class="form-control" [type]="fieldTextType ? 'text' : 'password'" id="si-password"
+                    formControlName="password" [ngClass]="{ 'is-invalid': submitted && form['password'].errors }">
+                  <div *ngIf="submitted && form['password'].errors" class="invalid-feedback">
+                    <span *ngIf="form['password'].errors['required']">Informe a senha</span>
+                  </div>
+                  <label class="password-toggle-btn" aria-label="Show/hide password">
+                    <!-- <i class="mdi mdi-eye"></i> -->
+                    <input class="password-toggle-check" type="checkbox"><span class="password-toggle-indicator"
+                      [ngClass]="fieldTextType ? 'mdi-eye-off-outline':'mdi-eye-off-outline'"
+                      (click)="toggleFieldTextType()"></span>
+                  </label>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="si-mesa">Mesa</label>
+                    <input class="form-control" type="number" id="si-mesa" placeholder="Número da mesa"
+                        formControlName="mesa" [ngClass]="{ 'is-invalid': submitted && form['mesa'].errors }">
+                    <div *ngIf="submitted && form['mesa'].errors" class="invalid-feedback">
+                        <span *ngIf="form['mesa'].errors['required']">Por gentileza informe a mesa</span>
+                    </div>
+                </div>
+    
+              </div>
+              <button class="btn btn-primary btn-shadow d-block w-100" type="submit">Entrar</button>
+            </form>
+          </ng-template>
+          <div [ngbNavOutlet]="nav"></div>
+        </li>
+      </ul>
+</div>
+
+
