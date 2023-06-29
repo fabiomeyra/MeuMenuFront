@@ -7,6 +7,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
+import AuthGuard from '../shared/guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -22,13 +23,13 @@ const routes: Routes = [
     path: 'checkout', component: CheckoutComponent
   },
   {
-    path: 'produtos', component: ListaProdutosComponent
+    path: 'produtos', component: ListaProdutosComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'cadastrar-produto', component: CadastroProdutosComponent
+    path: 'cadastrar-produto', component: CadastroProdutosComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'editar-produto/:produto', component: CadastroProdutosComponent
+    path: 'editar-produto/:produto', component: CadastroProdutosComponent, canActivate: [AuthGuard]
   },
 ];
 

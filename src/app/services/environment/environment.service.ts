@@ -9,4 +9,5 @@ export class EnvironmentService {
   apiProdutoUrl: string = environment.apiProdutoUrl;
   apiUsuarioUrl: string = environment.apiUsuarioUrl;
   apiPedidoUrl : string = environment.apiPedidoUrl;
+  criptogafiaKey: string = environment.criptogafiaKey;
 }

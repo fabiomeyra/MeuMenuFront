@@ -5,10 +5,7 @@
         class="navbar-brand d-sm-none me-2 order-lg-1"><img src="assets/img/logo-icon.png"
           width="74" alt="Cartzilla"></a>
       <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-        <a class="navbar-tool ms-2" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#showModal"
-          (click)="openModal()"><span class="navbar-tool-tooltip">Conta</span>
-          <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
-        </a>
+        
         <div class="navbar-tool dropdown ms-3 cart"><a
             class="navbar-tool-icon-box bg-secondary dropdown-toggle" routerLink="/carrinho"><span
               class="navbar-tool-label">{{carts.length}}</span><i class="navbar-tool-icon ci-cart"></i></a>
@@ -39,29 +36,23 @@
             </div>
           </div>
         </div>
+        <a *ngIf="!usuarioEstaLogado" class="navbar-tool ms-2" href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#showModal"
+          (click)="openModal()"><span class="navbar-tool-tooltip">Conta</span>
+          <div class="navbar-tool-icon-box"><i class="navbar-tool-icon ci-user"></i></div>
+        </a>
+        <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool dropdown ms-3">
+          <i class="navbar-tool-icon ci-user dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+          <div class="dropdown-menu dropdown-menu-end">
+            <a href="#" class="dropdown-item" (click)="logOut()">
+              Sair 
+              <i class="navbar-tool-icon ci-forward"></i>
+            </a>
+          </div>
+        </div>
       </div>
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse navbar-collapse me-auto order-lg-2"
         id="navbarCollapse">
-        <!-- Location dropdown-->
-        <!-- <ul class="navbar-nav navbar-mega-nav ms-lg-4 pe-lg-2 me-lg-2">
-          <li ngbDropdown class="nav-item dropdown"><a class="nav-link dropdown-toggle ps-lg-0"
-              href="javascript:void(0);" data-bs-toggle="dropdown" ngbDropdownToggle><i
-                class="ci-location me-2"></i>{{selectedLocation}}</a>
-            <ul ngbDropdownMenu class="dropdown-menu">
-              <li (click)="ChangeLocation('Los Angeles')"><a class="dropdown-item" href="javascript:void(0);">Los
-                  Angeles</a></li>
-              <li (click)="ChangeLocation('Chicago')"><a class="dropdown-item" href="javascript:void(0);">Chicago</a>
-              </li>
-              <li (click)="ChangeLocation('Houston')"><a class="dropdown-item" href="javascript:void(0);">Houston</a>
-              </li>
-              <li (click)="ChangeLocation('Philadelphia')"><a class="dropdown-item"
-                  href="javascript:void(0);">Philadelphia</a></li>
-              <li (click)="ChangeLocation('San Diego')"><a class="dropdown-item" href="javascript:void(0);">San
-                  Diego</a></li>
-              <li (click)="ChangeLocation('Miami')"><a class="dropdown-item" href="javascript:void(0);">Miami</a></li>
-            </ul>
-          </li>
-        </ul> -->
+        
         <!-- Primary menu-->
         <ul class="navbar-nav">
           <li ngbDropdown class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="javascript:void(0);"
@@ -116,7 +107,7 @@
             </div>
           </li>
           <li class="nav-item"><a class="nav-link" href="javascript:void(0);" routerLink="/">{{ "MENUITEMS.BaACKTOMAINDEMO" | translate }}</a></li>
-          <li class="nav-item"><a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Produtos</a></li>
+          <li *ngIf="podeExibirAbaProdutos" class="nav-item"><a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Produtos</a></li>
         </ul>
       </div>
     </div>

@@ -25,6 +25,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { NgxCurrencyModule } from 'ngx-currency';
+import AuthGuard from '../shared/guard/auth.guard';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -56,6 +57,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     NgxCurrencyModule,
     ScrollToModule.forRoot()
   ],
+  providers: [AuthGuard]
 
 })
 export class PagesModule { }

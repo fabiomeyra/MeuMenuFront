@@ -7,6 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
 
 import { cartdata } from 'src/app/pages/cart/data';
 import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 
 @Component({
@@ -33,6 +34,7 @@ export class HeaderComponent implements OnInit {
     private modalService: NgbModal,
     public translate: TranslateService,
     public router: Router,
+    private usuarioService: UsuarioService,
     public carrinhoService: CarrinhoService,
     ) {
       translate.setDefaultLang('en');
@@ -118,13 +120,8 @@ export class HeaderComponent implements OnInit {
     this.submitted = true;
   }
 
-  signup() {
-    if (this.signupformData.valid) {
-      const message = this.signupformData.get('email')!.value;
-      const pwd = this.signupformData.get('password')!.value;
-      this.modalService.dismissAll();
-    }
-    this.signupsubmit = true;
+  logOut() {
+    this.usuarioService.realizarLogOut();
   }
 
   // tslint:disable-next-line: typedef
@@ -146,6 +143,15 @@ export class HeaderComponent implements OnInit {
     this.total = this.total.toFixed(2)
     this.carrinhoService.removerProduto(i);
   }
+
+  get usuarioEstaLogado() {
+    return this.usuarioService.usuarioEstaLogado;
+  }
   
+  get podeExibirAbaProdutos() {
+    var usuario = this.usuarioService.retornaUsuario();
+    return this.usuarioService.usuarioEstaLogado
+      && usuario?.permissao === 'ADMIN';
+  }
 
 }
