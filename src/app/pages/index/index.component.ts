@@ -7,11 +7,12 @@ import { SwiperOptions } from 'swiper';
 import { Router } from '@angular/router';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.scss']
+  styleUrls: ['./index.component.scss'],
 })
 export class IndexComponent implements OnInit {
   category: any;
@@ -25,51 +26,36 @@ export class IndexComponent implements OnInit {
   constructor(
     public router: Router,
     private produtoService: ProdutoService,
-  ) { }
+    private pedidoService: PedidoService
+  ) {}
 
   ngOnInit(): void {
+    this.verificaPedidoAberto();
+
     this.produtoService.getCategorias().subscribe(
       (response) => {
-        this.category = response.data
+        this.category = response.data;
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
+          console.log('-- error: ', error);
           this.isLoading = false;
         }
       }
     );
 
-    document.querySelector('.cart')?.classList.add('d-none')
+    document.querySelector('.cart')?.classList.add('d-none');
   }
 
-  /**
- * Swiper setting
- */
-  public config: SwiperOptions = {
-    initialSlide: 0,
-    slidesPerView: 1,
-    spaceBetween: 25,
-    pagination: true,
-    breakpoints: {
-      575: {
-        slidesPerView: 2,
-      },
-      850: {
-        slidesPerView: 3,
-      },
-      1080: {
-        slidesPerView: 4,
-      }
+  verificaPedidoAberto() {
+    if (this.pedidoService.pedido.pedidoId) {
+      const dadosSerializados = encodeURIComponent(
+        JSON.stringify(this.pedidoService.pedido.pedidoId)
+      );
+      this.router.navigate(['/acompanhar-pedido', dadosSerializados]);
     }
-  };
-
-
-  godetail() {
-    // this.router.navigate('category')
-    // this.router.navigate(['/ecommerce/product-detail/1', this.products[id]])
   }
 
-
+  godetail() {}
 }

@@ -7,6 +7,7 @@ import { CartComponent } from './cart/cart.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { ListaProdutosComponent } from './lista-produtos/lista-produtos.component';
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
+import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 import AuthGuard from '../shared/guard/auth.guard';
 
 const routes: Routes = [
@@ -30,6 +31,9 @@ const routes: Routes = [
   },
   {
     path: 'editar-produto/:produto', component: CadastroProdutosComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'acompanhar-pedido/:pedido', component: AcompanhamentoPedidoClienteComponent
   },
 ];
 

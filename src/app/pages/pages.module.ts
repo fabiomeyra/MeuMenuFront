@@ -26,6 +26,7 @@ import { ListaProdutosComponent } from './lista-produtos/lista-produtos.componen
 import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos.component';
 import { NgxCurrencyModule } from 'ngx-currency';
 import AuthGuard from '../shared/guard/auth.guard';
+import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -41,6 +42,7 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     CheckoutComponent,
     ListaProdutosComponent,
     CadastroProdutosComponent,
+    AcompanhamentoPedidoClienteComponent,
   ],
   imports: [
     CommonModule,
