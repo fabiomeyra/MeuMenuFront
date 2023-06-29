@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class ListaProdutosComponent implements OnInit {
 
   constructor(
     public produtoService: ProdutoService,
+    public notificacaoService: NotificacaoService,
     private router: Router,
   ) { }
 
@@ -29,9 +31,8 @@ export class ListaProdutosComponent implements OnInit {
         this.categorias = response.data
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
-        }
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }
@@ -51,10 +52,9 @@ export class ListaProdutosComponent implements OnInit {
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
-          this.isLoading = false;
-        }
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }
@@ -67,10 +67,9 @@ export class ListaProdutosComponent implements OnInit {
         this.isLoading = false;
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
-          this.isLoading = false;
-        }
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }
@@ -86,12 +85,12 @@ export class ListaProdutosComponent implements OnInit {
       (response) => {
         this.carregarProdutos();
         this.isLoading = false;
+        this.notificacaoService.exibirMsgSucesso();
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          console.log("-- error: ", error);
-          this.isLoading = false;
-        }
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }

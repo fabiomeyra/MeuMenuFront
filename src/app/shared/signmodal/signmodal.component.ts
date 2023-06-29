@@ -4,6 +4,7 @@ import { UntypedFormBuilder, Validators, UntypedFormGroup } from '@angular/forms
 import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { CriptografiaService } from 'src/app/services/criptografia/criptografia.service';
 import { RealizarLoginModel } from '../models/realizarLoginModel';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-signmodal',
@@ -25,6 +26,7 @@ export class SignmodalComponent implements OnInit {
     public formBuilder: UntypedFormBuilder, 
     private modalService: NgbModal,
     private usuarioService: UsuarioService,
+    private notificacaoService: NotificacaoService,
     private criptografiaService: CriptografiaService) { }
 
   ngOnInit(): void {
@@ -89,9 +91,9 @@ export class SignmodalComponent implements OnInit {
     this.isLoading = true;
     this.usuarioService.realizarLogin(usuario)
     .subscribe(res => {
-      console.log(res);
       this.isLoading = false;
       this.modalService.dismissAll();
+      this.notificacaoService.exibirMsgSucesso({msg: 'Seja bem vindo!'})
     }, err => {
       this.isLoading = false;
       console.log(err);

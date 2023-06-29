@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiProdutoUrl: 'https://api-produto.azurewebsites.net/api',
+  apiProdutoUrl: 'https://localhost:7120/api',
   apiUsuarioUrl: 'https://api-usuario.azurewebsites.net/api',
   apiPedidoUrl: 'https://api-pedido.azurewebsites.net/api',
   criptogafiaKey: '$3$vVcYfygW$gO5V'

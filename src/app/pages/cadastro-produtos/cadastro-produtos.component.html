@@ -10,8 +10,11 @@
     <ul class="nav nav-tabs nav-justified mb-sm-4">
       <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4" href="javascript:void(0)"
           routerLink="/produtos">Produtos Cadastrados</a></li>
-      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0)">Cadastrar
-          Produto</a></li>
+      <li class="nav-item">
+        <a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0)">
+          {{produtoIdEdit ? 'Editar' : 'Cadastrar'}} Produto
+        </a>
+      </li>
     </ul>
     <app-loading *ngIf="isLoading"></app-loading>
     <form (ngSubmit)="salvar()" [formGroup]="formData"

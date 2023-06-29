@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 
 @Component({
   selector: 'app-cadastro-produtos',
@@ -21,6 +22,7 @@ export class CadastroProdutosComponent implements OnInit {
     public formBuilder: UntypedFormBuilder,
     public produtoService: ProdutoService,
     private route: ActivatedRoute,
+    private notificacaoService: NotificacaoService,
     private router: Router
   ) {}
 
@@ -70,10 +72,9 @@ export class CadastroProdutosComponent implements OnInit {
           });
         },
         (error: HttpErrorResponse) => {
-          if (error instanceof HttpErrorResponse) {
-            this.isLoading = false;
-            console.log('-- error: ', error);
-          }
+          this.isLoading = false;
+          if (error instanceof HttpErrorResponse)
+            this.notificacaoService.mostrarMsgErro(error);
         }
       );
     }
@@ -125,14 +126,14 @@ export class CadastroProdutosComponent implements OnInit {
         this.limparCampos();
         this.submitted = false;
         this.isLoading = false;
+        this.notificacaoService.exibirMsgSucesso();
         this.router.navigate(['/produtos']);
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          this.submitted = false;
-          this.isLoading = false;
-          console.log('-- error: ', error);
-        }
+        this.isLoading = false;
+        this.submitted = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }
@@ -144,14 +145,14 @@ export class CadastroProdutosComponent implements OnInit {
         this.limparCampos();
         this.submitted = false;
         this.isLoading = false;
+        this.notificacaoService.exibirMsgSucesso();
         this.router.navigate(['/produtos']);
       },
       (error: HttpErrorResponse) => {
-        if (error instanceof HttpErrorResponse) {
-          this.submitted = false;
-          this.isLoading = false;
-          console.log('-- error: ', error);
-        }
+        this.isLoading = false;
+        this.submitted = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({errosApi: error.error});
       }
     );
   }
