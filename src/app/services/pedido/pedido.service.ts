@@ -39,6 +39,16 @@ export class PedidoService {
     return this.http.patch(`${this.environment.apiPedidoUrl}/pedido/alterar-situacao`, pedido, this.httpOptions);
   }
 
+  getSituacoes(): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiPedidoUrl}/pedido/situacoes`, this.httpOptions);
+  }
+
+  getPedidosPorSituacao(situacao: number, ordenarPorMaisRecentes: boolean, pagina: number, quantidadePorPagina: number): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiPedidoUrl}/pedido/buscar-por-situacao?SituacaoPedido=${situacao}&OrdenarPorMaisRecentes=${ordenarPorMaisRecentes}&Pagina=${pagina}&QuantidadePorPagina=${quantidadePorPagina}`, this.httpOptions);
+  }
+
   private recuperarPedido() {
     const pedido = localStorage.getItem('pedido');
     if (pedido) {

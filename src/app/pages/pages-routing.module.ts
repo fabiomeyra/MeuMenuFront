@@ -12,6 +12,7 @@ import AuthGuard from '../shared/guard/auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ListaUsuariosComponent } from './usuario/listar/lista-usuarios.component';
 import { SalvarUsuarioComponent } from './usuario/salvar/salvar-usuario.component';
+import { AcompanhamentoPedidoGeralComponent } from './acompanhamento-pedido-geral/acompanhamento-pedido-geral.component';
 
 const routes: Routes = [
   {
@@ -49,6 +50,9 @@ const routes: Routes = [
   },
   {
     path: 'acompanhar-pedido/:pedido', component: AcompanhamentoPedidoClienteComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'acompanhar-pedidos', component: AcompanhamentoPedidoGeralComponent, canActivate: [AuthGuard]
   },
 ];
 
