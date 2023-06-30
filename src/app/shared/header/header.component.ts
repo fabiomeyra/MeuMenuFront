@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   UntypedFormBuilder,
@@ -15,6 +15,7 @@ import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 import { MesaPedidoService } from 'src/app/services/mesa-pedido/mesa-pedido.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
+import { ConfirmDialogComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +24,8 @@ import { NotificacaoService } from 'src/app/services/notificacao/notificacao.ser
 })
 export class HeaderComponent implements OnInit {
   @Output() onIsLoading = new EventEmitter<boolean>();
+
+  @ViewChild('confirmarLogOut') confirmarLogOut: ConfirmDialogComponent | undefined;
 
   public isCollapsed = true;
   formData!: UntypedFormGroup;
@@ -140,6 +143,14 @@ export class HeaderComponent implements OnInit {
   limparDadosUsuarioLogado() {
     this.usuarioService.realizarLogOut();
     this.router.navigate(['/login']);
+  }
+
+  abrirDialogConfirmarLogOut() {
+    this.confirmarLogOut?.abrir();
+  }
+
+  confirmalogOut(deslogar: boolean){
+    if(deslogar) this.logOut();
   }
 
   // tslint:disable-next-line: typedef

@@ -1,27 +1,29 @@
+<app-dialog-confirmacao #confirmarLogOut (confirmou)="confirmalogOut($event)"
+  [titulo]="'Sair da aplicação'"></app-dialog-confirmacao>
 <div (window:scroll)="windowScroll()" id="home">
   <header class="navbar d-block navbar-sticky navbar-expand-lg navbar-light bg-light">
     <div class="container"><a class="navbar-brand d-none d-sm-block me-4 order-lg-1" routerLink="/"><img
           src="assets/img/logo-dark.png" width="142" alt="Cartzilla"></a><a
-        class="navbar-brand d-sm-none me-2 order-lg-1"><img src="assets/img/logo-icon.png"
-          width="74" alt="Cartzilla"></a>
+        class="navbar-brand d-sm-none me-2 order-lg-1"><img src="assets/img/logo-icon.png" width="74"
+          alt="Cartzilla"></a>
       <div class="navbar-toolbar d-flex align-items-center order-lg-3">
-        
-        <div class="navbar-tool dropdown ms-3 cart"><a
-            class="navbar-tool-icon-box bg-secondary dropdown-toggle" routerLink="/carrinho"><span
-              class="navbar-tool-label">{{carts.length}}</span><i class="navbar-tool-icon ci-cart"></i></a>
+
+        <div class="navbar-tool dropdown ms-3 cart"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+            routerLink="/carrinho"><span class="navbar-tool-label">{{carts.length}}</span><i
+              class="navbar-tool-icon ci-cart"></i></a>
           <!-- Cart dropdown-->
           <div class="dropdown-menu dropdown-menu-end">
             <div class="widget widget-cart px-3 pt-2 pb-3" style="width: 20rem;">
               <div style="height: 15rem;" data-simplebar data-simplebar-auto-hide="false">
                 <div *ngFor="let cart of carts;let i = index" class="widget-cart-item pb-2 border-bottom">
-                  <button class="btn-close text-danger" type="button" aria-label="Remove" (click)="removecart(i, cart)"><span
-                      aria-hidden="true">&times;</span></button>
+                  <button class="btn-close text-danger" type="button" aria-label="Remove"
+                    (click)="removecart(i, cart)"><span aria-hidden="true">&times;</span></button>
                   <div class="d-flex align-items-center"><a class="d-block" href="javascript:void(0);"><img
                         src="{{cart.produtoImagem}}" width="64" alt="{{cart.produtoDescricao}}"></a>
                     <div class="ps-2">
                       <h6 class="widget-product-title"><a href="javascript:void(0);">{{cart.produtoDescricao}}</a></h6>
-                      <div class="widget-product-meta"><span class="text-accent me-2">{{cart.produtoValor | currency: "BRL"}}</span><span
-                          class="text-muted">x {{cart.qtd}}</span></div>
+                      <div class="widget-product-meta"><span class="text-accent me-2">{{cart.produtoValor | currency:
+                          "BRL"}}</span><span class="text-muted">x {{cart.qtd}}</span></div>
                     </div>
                   </div>
                 </div>
@@ -29,22 +31,18 @@
               <div class="d-flex flex-wrap justify-content-between align-items-center py-3">
                 <div class="fs-sm me-2 py-2"><span class="text-muted">Total:</span><span
                     class="text-accent fs-base ms-1">{{calculatetotal(total) | currency: "BRL"}}</span></div><a
-                  class="btn btn-outline-secondary btn-sm" href="javascript:void(0);" routerLink="/carrinho">Expandir Carrinho<i
-                    class="ci-arrow-right ms-1 me-n1"></i></a>
+                  class="btn btn-outline-secondary btn-sm" href="javascript:void(0);" routerLink="/carrinho">Expandir
+                  Carrinho<i class="ci-arrow-right ms-1 me-n1"></i></a>
               </div><a class="btn btn-primary btn-sm d-block w-100" href="javascript:void(0);" routerLink="/carrinho"><i
                   class="ci-card me-2 fs-base align-middle"></i>Finalizar</a>
             </div>
           </div>
         </div>
         &nbsp;
-        <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool dropdown ms-3">
-          <i class="navbar-tool-icon ci-user dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
-          <div class="dropdown-menu dropdown-menu-end">
-            <a class="dropdown-item" (click)="logOut()">
-              Sair 
-              <i class="navbar-tool-icon ci-forward"></i>
-            </a>
-          </div>
+        <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool ms-3" (click)="abrirDialogConfirmarLogOut()">
+          <i class="navbar-tool-icon ci-sign-out"></i>
+          &nbsp;
+          Sair
         </div>
       </div>
       <div #collapse="ngbCollapse" [(ngbCollapse)]="isCollapsed" class="collapse navbar-collapse me-auto order-lg-2"
@@ -71,10 +69,9 @@
 
 <div class="handheld-toolbar">
   <div class="d-table table-layout-fixed w-100">
-    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="modal"
-      (click)="openModal()">
-      <span class="handheld-toolbar-icon"><i class="ci-user"></i></span>
-      <span class="handheld-toolbar-label">Conta</span>
+    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/">
+      <span class="handheld-toolbar-icon"><i class="ci-home"></i></span>
+      <span class="handheld-toolbar-label">Home</span>
     </a>
     <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" data-bs-toggle="collapse"
       data-bs-target="#navbarCollapse" (click)="collapse.toggle()" onclick="window.scrollTo(0, 0)">
