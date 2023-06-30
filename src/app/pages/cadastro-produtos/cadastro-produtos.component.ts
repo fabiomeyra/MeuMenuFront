@@ -1,6 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, Validators, FormGroup } from '@angular/forms';
+import {
+  UntypedFormBuilder,
+  Validators,
+  FormGroup,
+  FormControl,
+} from '@angular/forms';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
@@ -17,6 +22,7 @@ export class CadastroProdutosComponent implements OnInit {
   produtoImagem!: File;
   isLoading: boolean = false;
   produtoIdEdit: string = '';
+  produtoImgEdit: string = '';
 
   constructor(
     public formBuilder: UntypedFormBuilder,
@@ -33,6 +39,7 @@ export class CadastroProdutosComponent implements OnInit {
       },
       (error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
+          this.notificacaoService.mostrarMsgErro({ errosApi: error });
           console.log('-- error: ', error);
         }
       }
@@ -70,11 +77,12 @@ export class CadastroProdutosComponent implements OnInit {
             produtoImagem: '',
             produtoAtivo: response.data.produtoAtivo ? 'true' : 'false',
           });
+          this.produtoImgEdit = response.data.produtoImagem;
         },
         (error: HttpErrorResponse) => {
           this.isLoading = false;
           if (error instanceof HttpErrorResponse)
-            this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
+            this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
         }
       );
     }
@@ -100,24 +108,33 @@ export class CadastroProdutosComponent implements OnInit {
     this.submitted = true;
     this.isLoading = true;
 
-    const formData: FormData = new FormData();
-    formData.append('ProdutoDescricao', form.produtoDescricao);
-    formData.append('ProdutoAtivo', form.produtoAtivo);
-    formData.append('ProdutoValor', form.produtoValor);
-    formData.append('ProdutoIngredientes', form.produtoIngredientes);
-    formData.append('ProdutoCalorias', form.produtoCalorias);
-    formData.append('ProdutoAlergias', form.produtoAlergias);
-    formData.append('CategoriaId', form.categoriaId);
+    const payload = {
+      produtoDescricao: form.produtoDescricao,
+      produtoAtivo: form.produtoAtivo == 'true',
+      produtoValor: form.produtoValor,
+      produtoIngredientes: form.produtoIngredientes,
+      produtoCalorias: form.produtoCalorias,
+      produtoAlergias: form.produtoAlergias,
+      categoriaId: form.categoriaId,
+      produtoImagem: '',
+    };
 
-    if (this.produtoImagem)
-      formData.append(
-        'ProdutoImagem',
-        this.produtoImagem,
-        this.produtoImagem?.name
-      );
+    if (this.produtoImagem) {
+      this.fileToBase64(this.produtoImagem)
+        .then((base64) => {
+          payload.produtoImagem = base64;
 
-    if (this.produtoIdEdit) this.alterarProduto(formData);
-    else this.cadastrarProduto(formData);
+          if (this.produtoIdEdit) this.alterarProduto(payload);
+          else this.cadastrarProduto(payload);
+        })
+        .catch((error) => {
+          this.notificacaoService.exibirMsgErro({ msg: error });
+          console.log('-- error: ', error);
+        });
+    } else {
+      if (this.produtoIdEdit) this.alterarProduto(payload);
+      else this.cadastrarProduto(payload);
+    }
   }
 
   cadastrarProduto(produto: any) {
@@ -133,13 +150,16 @@ export class CadastroProdutosComponent implements OnInit {
         this.isLoading = false;
         this.submitted = false;
         if (error instanceof HttpErrorResponse)
-          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
+          this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
       }
     );
   }
 
   alterarProduto(produto: any) {
-    produto.append('ProdutoId', this.produtoIdEdit);
+    produto.produtoId = this.produtoIdEdit;
+
+    produto.produtoImagem = produto.produtoImagem || this.produtoImgEdit;
+
     this.produtoService.alterarProduto(produto, this.produtoIdEdit).subscribe(
       () => {
         this.limparCampos();
@@ -152,8 +172,26 @@ export class CadastroProdutosComponent implements OnInit {
         this.isLoading = false;
         this.submitted = false;
         if (error instanceof HttpErrorResponse)
-          this.notificacaoService.mostrarMsgErro({errosApi: error?.error});
+          this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
       }
     );
+  }
+
+  fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const base64String = reader.result as string;
+        const base64 = base64String.split(',')[1]; // Remove o cabeçalho da string Base64
+        resolve(base64);
+      };
+
+      reader.onerror = (error) => {
+        reject(error);
+      };
+
+      reader.readAsDataURL(file);
+    });
   }
 }

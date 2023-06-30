@@ -19,7 +19,7 @@
     <app-loading *ngIf="isLoading"></app-loading>
     <form (ngSubmit)="salvar()" [formGroup]="formData"
       class="needs-validation px-3 px-sm-4 px-xl-5 pt-sm-1 pb-4 pb-sm-5" *ngIf="!isLoading">
-      <div class="row pb-4 pt-3">
+      <div class="row pt-3">
         <div class="col-sm-6 mb-4">
           <label class="form-label" for="fd-name">Descrição<sup class="text-danger ms-1">*</sup></label>
           <input class="form-control" type="text" required id="fd-descricao" formControlName="produtoDescricao"
@@ -72,10 +72,22 @@
           </select>
           <div class="invalid-feedback">Informe a categoria!</div>
         </div>
+        <!-- <div class="col-sm-6 mb-4">
+          <label class="form-label" for="fd-imagem">Imagem</label>
+          <input class="form-control" type="file" id="fd-imagem" formControlName="produtoImagem"
+            (change)="onFileSelected($event)">
+        </div> -->
+      </div>
+      <div class="row">
         <div class="col-sm-6 mb-4">
           <label class="form-label" for="fd-imagem">Imagem</label>
           <input class="form-control" type="file" id="fd-imagem" formControlName="produtoImagem"
             (change)="onFileSelected($event)">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 mb-4">
+          <img src="{{produtoImgEdit}}" class="rounded-3" alt="" width="300">
         </div>
       </div>
       <div class="row">
