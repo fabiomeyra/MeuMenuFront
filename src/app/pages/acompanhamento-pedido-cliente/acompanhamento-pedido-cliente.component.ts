@@ -1,6 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
@@ -14,17 +16,18 @@ export class AcompanhamentoPedidoClienteComponent {
   totalprice: any = 0;
   submitted = false;
   pedidoStatus = '';
+  isLoading = false;
 
   constructor(
     public carrinhoService: CarrinhoService,
     public pedidoService: PedidoService,
     private router: Router,
+    private notificacaoService: NotificacaoService
   ) {}
 
   ngOnInit(): void {
     this.produtosPedido = this.pedidoService.pedido.produtos;
     this.pedidoStatus = this.pedidoService.pedido.pedidoStatus;
-    console.log(this.produtosPedido);
     this.produtosPedido.forEach((element: any) => {
       this.totalprice += element.total;
     });
@@ -52,12 +55,28 @@ export class AcompanhamentoPedidoClienteComponent {
   }
 
   finalizarPedido() {
-    // chamar api para atualizar status
+    this.isLoading = true;
 
-    console.log('-- pedido ', this.pedidoService.pedido);
-    this.pedidoService.limparPedido();
+    const pedido = {
+      pedidoId: this.pedidoService.pedido.pedidoId,
+      situacaoId: 5, // conta solicitada
+    };
 
-    // mostrar mensagem de boas vindas
-    this.router.navigate(['/']);
+    this.pedidoService.alterarSituacaoPedido(pedido).subscribe(
+      () => {
+        this.notificacaoService.exibirMsgSucesso({
+          msg: 'Seu pedido foi finalizado com sucesso, em breve um atendente irá levar sua conta até sua mesa!',
+          titulo: 'Pedido Finalizado'
+        });
+        this.pedidoService.limparPedido();
+        this.router.navigate(['/']);
+        this.isLoading = false;
+      },
+      (error: HttpErrorResponse) => {
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
+      }
+    );
   }
 }

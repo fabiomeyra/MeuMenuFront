@@ -1,6 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CarrinhoService } from 'src/app/services/carrinho/carrinho.service';
+import { MesaPedidoService } from 'src/app/services/mesa-pedido/mesa-pedido.service';
+import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
@@ -14,11 +17,14 @@ export class CartComponent implements OnInit {
   totalprice: any = 0;
   submitted = false;
   observacoes = '';
+  isLoading = false;
 
   constructor(
     public carrinhoService: CarrinhoService,
     public pedidoService: PedidoService,
-    private router: Router
+    private router: Router,
+    private notificacaoService: NotificacaoService,
+    private mesaPedidoService: MesaPedidoService
   ) {}
 
   ngOnInit(): void {
@@ -68,11 +74,20 @@ export class CartComponent implements OnInit {
   }
 
   finalizarPedido() {
+    this.isLoading = true;
+    const mesaOcupada = this.mesaPedidoService.retornaMesaOcupada;
+
+    if (!mesaOcupada) {
+      this.notificacaoService.exibirMsgErro({ msg: 'Mesa não ocupada!' });
+      this.isLoading = false;
+      return;
+    }
+
     let pedido = {
       pedidoId: '',
       pedidoStatus: '',
       pedidoObservacao: this.observacoes,
-      pedidoMesa: 1,
+      pedidoMesa: mesaOcupada,
       produtos: this.carrinhoService.produtos.map((obj) => ({
         produtoId: obj.produtoId,
         produtoQuantidade: parseInt(obj.qtd),
@@ -83,20 +98,30 @@ export class CartComponent implements OnInit {
       })),
     };
 
-    // chamar api pedido
-    pedido.pedidoId = 'pedidoId';
-    pedido.pedidoStatus = "Em Andamento";
+    this.pedidoService.cadastrarPedido(pedido).subscribe(
+      (response) => {
+        this.notificacaoService.exibirMsgSucesso();
+        pedido.pedidoId = response.data.pedidoId;
+        pedido.pedidoStatus = response.data.situacaoPedidoDrescricao;
 
-    this.pedidoService.pedido = pedido;
-    this.pedidoService.salvarPedido();
-    this.carrinhoService.limparCarrinho();
-    this.iniciarCarrinho();
-    this.totalprice = 0;
-    this.observacoes = '';
+        this.pedidoService.pedido = pedido;
+        this.pedidoService.salvarPedido();
+        this.carrinhoService.limparCarrinho();
+        this.iniciarCarrinho();
+        this.totalprice = 0;
+        this.observacoes = '';
+        this.isLoading = false;
 
-    const dadosSerializados = encodeURIComponent(
-      JSON.stringify(pedido.pedidoId)
+        const dadosSerializados = encodeURIComponent(
+          JSON.stringify(pedido.pedidoId)
+        );
+        this.router.navigate(['/acompanhar-pedido', dadosSerializados]);
+      },
+      (error: HttpErrorResponse) => {
+        this.isLoading = false;
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
+      }
     );
-    this.router.navigate(['/acompanhar-pedido', dadosSerializados]);
   }
 }
