@@ -67,12 +67,12 @@ export class ListaUsuariosComponent implements OnInit {
   }
 
   proximaPagina() {
-    this.filtroPesquisa.paginaAtual = this.filtroPesquisa?.paginaAtual ?? 0 + 1;
+    this.filtroPesquisa.paginaAtual = (this.filtroPesquisa?.paginaAtual ?? 0) + 1;
     this.pesquisarUsuarios();
   }
 
   paginaAnterior() {
-    this.filtroPesquisa.paginaAtual = this.filtroPesquisa?.paginaAtual ?? 0 - 1;
+    this.filtroPesquisa.paginaAtual = (this.filtroPesquisa?.paginaAtual ?? 0) - 1;
     this.pesquisarUsuarios();
   }
 
@@ -82,7 +82,6 @@ export class ListaUsuariosComponent implements OnInit {
   }
 
   pesquisarUsuarios() {
-    console.log('filtro: ', this.filtroPesquisa)
     this.isLoading = true;
     this.usuarioService.pesquisar(this.filtroPesquisa).subscribe(
       ({ data }) => {
