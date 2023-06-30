@@ -28,6 +28,7 @@ import { ListaProdutosComponent } from './lista-produtos/lista-produtos.componen
 import { LoginComponent } from './login/login.component';
 import { ListaUsuariosComponent } from './usuario/listar/lista-usuarios.component';
 import { AcompanhamentoPedidoGeralComponent } from './acompanhamento-pedido-geral/acompanhamento-pedido-geral.component';
+import { DetalhesPedidoComponent } from './detalhes-pedido/detalhes-pedido.component';
 
 
 const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
@@ -46,7 +47,8 @@ const DEFAULT_SWIPER_CONFIG: SwiperConfigInterface = {
     AcompanhamentoPedidoClienteComponent,
     LoginComponent,
     ListaUsuariosComponent,
-    AcompanhamentoPedidoGeralComponent
+    AcompanhamentoPedidoGeralComponent,
+    DetalhesPedidoComponent
   ],
   imports: [
     CommonModule,

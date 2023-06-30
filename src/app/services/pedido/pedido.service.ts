@@ -49,6 +49,11 @@ export class PedidoService {
     return this.http.get(`${this.environment.apiPedidoUrl}/pedido/buscar-por-situacao?SituacaoPedido=${situacao}&OrdenarPorMaisRecentes=${ordenarPorMaisRecentes}&Pagina=${pagina}&QuantidadePorPagina=${quantidadePorPagina}`, this.httpOptions);
   }
 
+  getPedidoPorId(id: any): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiPedidoUrl}/pedido/${id}`, this.httpOptions);
+  }
+
   private recuperarPedido() {
     const pedido = localStorage.getItem('pedido');
     if (pedido) {

@@ -16,7 +16,9 @@ export class AcompanhamentoPedidoClienteComponent {
   totalprice: any = 0;
   submitted = false;
   pedidoStatus = '';
+  pedidoStatusId: any;
   isLoading = false;
+  timer: any;
 
   constructor(
     public carrinhoService: CarrinhoService,
@@ -26,11 +28,27 @@ export class AcompanhamentoPedidoClienteComponent {
   ) {}
 
   ngOnInit(): void {
+    this.consultarStatusPedido();
     this.produtosPedido = this.pedidoService.pedido.produtos;
-    this.pedidoStatus = this.pedidoService.pedido.pedidoStatus;
     this.produtosPedido.forEach((element: any) => {
       this.totalprice += element.total;
     });
+
+    this.timer = setInterval(() => {
+      this.consultarStatusPedido();
+    }, 10000); // 10 segundos
+  }
+
+  consultarStatusPedido() {
+    this.pedidoService.getPedidoPorId(this.pedidoService.pedido.pedidoId).subscribe(
+      (response) => {
+        this.pedidoStatus = response.data.situacaoPedidoDrescricao;
+      },
+      (error: HttpErrorResponse) => {
+        if (error instanceof HttpErrorResponse)
+          this.notificacaoService.mostrarMsgErro({ errosApi: error?.error });
+      }
+    );
   }
 
   calculatetotal(i: any, ev: any) {
@@ -56,6 +74,8 @@ export class AcompanhamentoPedidoClienteComponent {
 
   finalizarPedido() {
     this.isLoading = true;
+
+    clearInterval(this.timer);
 
     const pedido = {
       pedidoId: this.pedidoService.pedido.pedidoId,

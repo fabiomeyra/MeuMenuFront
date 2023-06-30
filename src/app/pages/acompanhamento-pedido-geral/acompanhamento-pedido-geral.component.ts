@@ -1,15 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import {
-  UntypedFormBuilder,
-  Validators,
-  FormGroup,
-  FormControl,
-} from '@angular/forms';
+import { UntypedFormBuilder, FormGroup } from '@angular/forms';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { PedidoService } from 'src/app/services/pedido/pedido.service';
+import { UsuarioService } from 'src/app/services/usuario/usuario.service';
 
 @Component({
   selector: 'app-acompanhamento-pedido-geral',
@@ -26,6 +22,7 @@ export class AcompanhamentoPedidoGeralComponent {
   produtoIdEdit: string = '';
   produtoImgEdit: string = '';
   situacaoSelecionada = 0;
+  perfilUsuarioLogado: any = '';
 
   constructor(
     public formBuilder: UntypedFormBuilder,
@@ -33,13 +30,17 @@ export class AcompanhamentoPedidoGeralComponent {
     public pedidoService: PedidoService,
     private route: ActivatedRoute,
     private notificacaoService: NotificacaoService,
-    private router: Router
+    private router: Router,
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
+    this.perfilUsuarioLogado = this.usuarioService.retornaPermissaoUsuario;
+
     this.pedidoService.getSituacoes().subscribe(
       (response) => {
         this.situacoes = response.data;
+        this.filtrarSituacoesPorPerfil();
       },
       (error: HttpErrorResponse) => {
         if (error instanceof HttpErrorResponse) {
@@ -48,6 +49,16 @@ export class AcompanhamentoPedidoGeralComponent {
         }
       }
     );
+  }
+
+  filtrarSituacoesPorPerfil() {
+    if (this.perfilUsuarioLogado == 'COZINHA')
+      this.situacoes = this.situacoes.filter(
+        (s: any) =>
+          s.situacaoPedidoId == 1 || // ENVIADO
+          s.situacaoPedidoId == 2 || // EM PREPARO
+          s.situacaoPedidoId == 3 // PRONTO
+      );
   }
 
   changeSituacao(event: any) {
@@ -69,8 +80,7 @@ export class AcompanhamentoPedidoGeralComponent {
                 if (pedido.produtosResumo == '')
                   pedido.produtosResumo = p.produto?.produtoDescricao;
                 else
-                  pedido.produtosResumo +=
-                    ', ' + p.produto?.produtoDescricao;
+                  pedido.produtosResumo += ', ' + p.produto?.produtoDescricao;
               });
 
               arrayOriginal[index] = pedido;
@@ -88,7 +98,8 @@ export class AcompanhamentoPedidoGeralComponent {
   }
 
   visualizarPedido(pedido: any) {
-    this.router.navigate(['/'])
+    const dadosSerializados = encodeURIComponent(pedido.pedidoId);
+    this.router.navigate(['/detalhes-pedido', dadosSerializados]);
   }
 
   abrirDialogExclusao(produto: any) {

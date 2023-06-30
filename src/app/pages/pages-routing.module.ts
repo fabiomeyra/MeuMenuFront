@@ -13,6 +13,7 @@ import { LoginComponent } from './login/login.component';
 import { ListaUsuariosComponent } from './usuario/listar/lista-usuarios.component';
 import { SalvarUsuarioComponent } from './usuario/salvar/salvar-usuario.component';
 import { AcompanhamentoPedidoGeralComponent } from './acompanhamento-pedido-geral/acompanhamento-pedido-geral.component';
+import { DetalhesPedidoComponent } from './detalhes-pedido/detalhes-pedido.component';
 
 const routes: Routes = [
   {
@@ -53,6 +54,9 @@ const routes: Routes = [
   },
   {
     path: 'acompanhar-pedidos', component: AcompanhamentoPedidoGeralComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'detalhes-pedido/:pedidoId', component: DetalhesPedidoComponent, canActivate: [AuthGuard]
   },
 ];
 
