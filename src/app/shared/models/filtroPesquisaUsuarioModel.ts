@@ -1,13 +1,10 @@
-export class UsuarioModel {
+export class FiltroPesquisaUsuarioModel {
     usuarioId: string | undefined;
     usuarioNome: string | undefined;
     usuarioLogin: string | undefined;
     perfilId: number | undefined;
-    dataCadastro: Date | undefined;
-    dataAlteracao: Date | undefined;
-    permissao: string | undefined;
-    perfilDescricao: string | undefined;
-    ehUsuarioTipoPedido: boolean = false;
+    paginaAtual: number = 0;
+    quantidadePorPagina: number | undefined;
 
     constructor(values: object = {}) {
         Object.assign(this, values);

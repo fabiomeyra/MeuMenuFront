@@ -1,8 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { ProdutoService } from 'src/app/services/produto/produto.service';
+import { ConfirmDialogComponent } from 'src/app/shared/dialog-confirmacao/dialog-confirmacao.component';
 
 @Component({
   selector: 'app-lista-produtos',
@@ -11,11 +12,14 @@ import { ProdutoService } from 'src/app/services/produto/produto.service';
 })
 export class ListaProdutosComponent implements OnInit {
 
+  @ViewChild('confirmarExclusao') confirmarExclusao: ConfirmDialogComponent | undefined;
+
   produtos: any;
   categorias: any;
   isLoading = false;
   categoriaSelecionada = 0;
   produtoEdit: any;
+  produtoParaExclusao: any;
 
   constructor(
     public produtoService: ProdutoService,
@@ -98,5 +102,18 @@ export class ListaProdutosComponent implements OnInit {
   changeCategoria(event: any) {
     this.categoriaSelecionada = event.target.value;
     this.carregarProdutos();
+  }
+
+  abrirDialogExclusao(produto: any) {
+    this.produtoParaExclusao = produto;
+    this.confirmarExclusao?.abrir();
+  }
+
+  confirmou(valor: boolean) {
+    if(!valor || !this.produtoParaExclusao) {
+      this.produtoParaExclusao = null;
+      return;
+    }
+    this.deletarProduto(this.produtoParaExclusao);
   }
 }

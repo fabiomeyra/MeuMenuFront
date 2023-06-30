@@ -5,6 +5,9 @@ import { Observable } from 'rxjs';
 import { RealizarLoginModel } from 'src/app/shared/models/realizarLoginModel';
 import { UsuarioModel } from 'src/app/shared/models/usuarioModel';
 import { UsuarioAccessTokenModel } from 'src/app/shared/models/usuarioAccesTokenModel';
+import { FiltroPesquisaUsuarioModel } from 'src/app/shared/models/filtroPesquisaUsuarioModel';
+import { query } from '@angular/animations';
+import { SalvarUsuarioModel } from 'src/app/shared/models/salvarUsuarioModel';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +20,41 @@ export class UsuarioService {
     private http: HttpClient,
     private environment: EnvironmentService
   ) {}
+
+  buscarPerfis(): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiUsuarioUrl}/usuario/perfis-para-selecao`, this.httpOptions);
+  }
+
+  pesquisar(filtro: FiltroPesquisaUsuarioModel): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(this.montaQueryString(`${this.environment.apiUsuarioUrl}/usuario/pesquisar`, filtro), this.httpOptions);
+  }
+
+  buscar(id: string): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiUsuarioUrl}/usuario/${id}`, this.httpOptions);
+  }
+
+  buscarTodos(): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.get(`${this.environment.apiUsuarioUrl}/usuario`, this.httpOptions);
+  }
+
+  cadastrar(usuario: SalvarUsuarioModel): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.post(`${this.environment.apiUsuarioUrl}/usuario/`, usuario, this.httpOptions);
+  }
+
+  atualizar(usuario: SalvarUsuarioModel): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.put(`${this.environment.apiUsuarioUrl}/usuario/`, usuario, this.httpOptions);
+  }
+
+  excluir(id: string): Observable<any> {
+    this.adicionarTokenNaRequisicao();
+    return this.http.delete(`${this.environment.apiUsuarioUrl}/usuario/${id}`, this.httpOptions);
+  }
 
   realizarLogin(model: RealizarLoginModel): Observable<any> {
     return new Observable(subscriber => {
@@ -79,5 +117,29 @@ export class UsuarioService {
   get retornaPermissaoUsuario(): string | null | undefined {
     var usuario = this.getUsuario;
     return usuario?.permissao;
+  }
+
+  private adicionarTokenNaRequisicao() {
+    let token = this.obterToken;
+    this.httpOptions.headers = this.httpOptions.headers.set('Authorization',  `Bearer ${token}`);
+  }
+
+  private montaQueryString(url: string, params: object): string{
+    if(!params) return url;
+    let keys: Array<string> = Object.keys(params);
+    if(!keys || !keys.length) return url;
+
+    let inseriuPrimeiroParametro = false;
+
+    for(let i = 0; i < keys.length; i++){
+      let simbolo = !inseriuPrimeiroParametro ? '?' : '&';
+      var valor = params[keys[i] as keyof typeof params]
+      if(valor) {
+        url += `${simbolo}${keys[i]}=${valor}`;
+        inseriuPrimeiroParametro = true;
+      }
+    }
+
+    return url;
   }
 }

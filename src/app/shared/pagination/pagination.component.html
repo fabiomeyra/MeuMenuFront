@@ -1,0 +1,41 @@
+<nav aria-label="pagination">
+  <ul class="pagination">
+    <li class="page-item">
+      <button
+        aria-label="Anterior"
+        [attr.aria-disabled]="current === 1"
+        [disabled]="current === 1"
+        (click)="onPrevious()"
+      >
+        Anterior
+      </button>
+    </li>
+    <li class="page-item d-sm-none">
+      <span class="page-link page-link-static">{{ current }} / {{ totalPages }}</span>
+    </li>
+    <li *ngFor="let page of pages;" class="page-item d-none d-sm-block">
+      <a
+        [attr.aria-current]="page === current ? 'página' : null"
+        [attr.aria-label]="
+          page === current ? 'Página atual, página ' + page : 'Ir para página ' + page
+        "
+        [class.current]="page === current"
+        tabindex="0"
+        (click)="onGoTo(page)"
+        (keyup.enter)="onGoTo(page)"
+        >
+{{ page }}</a
+      >
+    </li>
+    <li class="page-item">
+      <button
+        aria-label="Próxima"
+        [attr.aria-disabled]="current === totalPages"
+        [disabled]="current === totalPages"
+        (click)="onNext()"
+      >
+        Próxima
+      </button>
+    </li>
+  </ul>
+</nav>

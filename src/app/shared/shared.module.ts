@@ -14,6 +14,9 @@ import { LoadingComponent } from './loading/loading.component';
 import { SignmodalComponent } from './signmodal/signmodal.component';
 import { LanguageService } from '../services/language.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { ConfirmDialogComponent } from './dialog-confirmacao/dialog-confirmacao.component';
+import { PaginationComponent } from './pagination/pagination.component';
+import { SalvarUsuarioComponent } from '../pages/usuario/salvar/salvar-usuario.component';
 
 
 @NgModule({
@@ -22,6 +25,9 @@ import { TranslateModule } from '@ngx-translate/core';
     FooterComponent,
     SignmodalComponent,
     LoadingComponent,
+    ConfirmDialogComponent,
+    PaginationComponent,
+    SalvarUsuarioComponent
   ],
   imports: [
     CommonModule,
@@ -39,6 +45,8 @@ import { TranslateModule } from '@ngx-translate/core';
     HeaderComponent,
     FooterComponent,
     LoadingComponent,
+    ConfirmDialogComponent,
+    PaginationComponent
   ]
 })
 export class SharedModule { }

@@ -10,6 +10,8 @@ import { CadastroProdutosComponent } from './cadastro-produtos/cadastro-produtos
 import { AcompanhamentoPedidoClienteComponent } from './acompanhamento-pedido-cliente/acompanhamento-pedido-cliente.component';
 import AuthGuard from '../shared/guard/auth.guard';
 import { LoginComponent } from './login/login.component';
+import { ListaUsuariosComponent } from './usuario/listar/lista-usuarios.component';
+import { SalvarUsuarioComponent } from './usuario/salvar/salvar-usuario.component';
 
 const routes: Routes = [
   {
@@ -35,6 +37,15 @@ const routes: Routes = [
   },
   {
     path: 'editar-produto/:produto', component: CadastroProdutosComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'usuarios', component: ListaUsuariosComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'cadastrar-usuario', component: SalvarUsuarioComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'editar-usuario/:usuarioId', component: SalvarUsuarioComponent, canActivate: [AuthGuard]
   },
   {
     path: 'acompanhar-pedido/:pedido', component: AcompanhamentoPedidoClienteComponent, canActivate: [AuthGuard]

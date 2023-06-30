@@ -36,6 +36,7 @@
             </div>
           </div>
         </div>
+        &nbsp;
         <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool dropdown ms-3">
           <i class="navbar-tool-icon ci-user dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
           <div class="dropdown-menu dropdown-menu-end">
@@ -60,7 +61,7 @@
             <a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Produtos</a>
           </li>
           <li *ngIf="podeExibirAbaProdutos && !usuarioService.ehUsuarioTipoPedido" class="nav-item">
-            <a class="nav-link" href="javascript:void(0);" routerLink="/produtos">Usuários</a>
+            <a class="nav-link" href="javascript:void(0);" routerLink="/usuarios">Usuários</a>
           </li>
         </ul>
       </div>

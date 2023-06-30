@@ -1,4 +1,5 @@
 <app-header></app-header>
+<app-dialog-confirmacao #confirmarExclusao [titulo]="'Excluir produto'" (confirmou)="confirmou($event)"></app-dialog-confirmacao>
 <div class="container pt-4 pb-3 py-sm-4">
   <nav aria-label="breadcrumb">
     <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
@@ -56,7 +57,7 @@
                         <i class="ci-edit"></i>
                       </button>
                       &nbsp;
-                      <button type="button" class="btn btn-danger btn-icon" (click)="deletarProduto(produto)">
+                      <button type="button" class="btn btn-danger btn-icon" (click)="abrirDialogExclusao(produto)">
                         <i class="ci-trash"></i>
                       </button>
                     </td>

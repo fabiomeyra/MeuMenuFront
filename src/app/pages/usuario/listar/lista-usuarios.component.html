@@ -1,0 +1,86 @@
+<app-header></app-header>
+<app-dialog-confirmacao #confirmarExclusao [titulo]="'Excluir usuário'" (confirmou)="confirmou($event)"></app-dialog-confirmacao>
+<div class="container pt-4 pb-3 py-sm-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb flex-lg-nowrap justify-content-center justify-content-lg-start">
+      <li class="breadcrumb-item"><a class="text-nowrap" routerLink="/"><i class="ci-home"></i>Home</a></li>
+      <li class="breadcrumb-item text-nowrap active" aria-current="page">Produtos</li>
+    </ol>
+  </nav>
+  <div class="rounded-3 shadow-lg mt-4 mb-5">
+    <ul class="nav nav-tabs nav-justified mb-sm-4">
+      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4 active" href="javascript:void(0)">Usuários
+          cadastrados</a></li>
+      <li class="nav-item"><a class="nav-link fs-lg fw-medium py-4" href="javascript:void(0)"
+          routerLink="/cadastrar-usuario">Cadastrar usuários</a></li>
+    </ul>
+    <div class="px-3 px-sm-4 px-xl-5 pt-1 pb-4 pb-sm-5">
+      <div class="row">
+        <div class="col-sm-4 mb-4">
+          <label class="form-label" for="fd-name">Nome</label>
+          <input class="form-control" type="text" [(ngModel)]="filtroPesquisa.usuarioNome" (ngModelChange)="this.nomeUsuarioAtualizado.next($event)">
+        </div>
+        <div class="col-sm-4 mb-4">
+          <label class="form-label" for="fd-perfil">Perfil</label>
+          <select class="form-select" [(ngModel)]="filtroPesquisa.perfilId" (change)="pesquisarUsuarios()">
+            <option [value]="-1">Todos</option>
+            <option *ngFor="let perfil of perfis" value="{{perfil.perfilId}}">
+              {{perfil.perfilDescricao}}</option>
+          </select>
+        </div>
+        <div class="col-sm-4 mb-4">
+          <label class="form-label" for="fd-login">Login</label>
+          <input class="form-control" type="text" [(ngModel)]="filtroPesquisa.usuarioLogin" (ngModelChange)="this.loginUsuarioAtualizado.next($event)">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-7 pt-sm-2">
+          <app-loading *ngIf="isLoading"></app-loading>
+          <div class="row pb-4 pt-3" *ngIf="!isLoading">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr class="text-center">
+                    <th>Nome</th>
+                    <th>Login</th>
+                    <th>Perfil</th>
+                    <th>#</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let usuario of usuarios" class="text-center">
+                    <td>{{ usuario.usuarioNome }}</td>
+                    <td>{{ usuario.usuarioLogin }}</td>
+                    <td>{{ usuario.perfilDescricao }}</td>
+                    <td class="text-center">
+                      <button type="button" class="btn btn-info btn-icon" (click)="alterar(usuario)">
+                        <i class="ci-edit"></i>
+                      </button>
+                      &nbsp;
+                      <button type="button" class="btn btn-danger btn-icon" (click)="abrirDialogExclusao(usuario)">
+                        <i class="ci-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="row pb-4 pt-3" *ngIf="!isLoading && quantidadeTotalBusca > (filtroPesquisa?.quantidadePorPagina ?? 0)">
+              <app-pagination
+                [current]="filtroPesquisa.paginaAtual"
+                [totalRecords]="quantidadeTotalBusca"
+                [perPage]="(filtroPesquisa?.quantidadePorPagina ?? 0)"
+                (goTo)="definirPaginaAtual($event)"
+                (next)="proximaPagina()"
+                (previous)="paginaAnterior()"
+              >
+
+              </app-pagination>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-footer></app-footer>
