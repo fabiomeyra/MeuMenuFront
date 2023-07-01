@@ -52,13 +52,35 @@ export class AcompanhamentoPedidoGeralComponent {
   }
 
   filtrarSituacoesPorPerfil() {
-    if (this.perfilUsuarioLogado == 'COZINHA')
-      this.situacoes = this.situacoes.filter(
-        (s: any) =>
-          s.situacaoPedidoId == 1 || // ENVIADO
-          s.situacaoPedidoId == 2 || // EM PREPARO
-          s.situacaoPedidoId == 3 // PRONTO
-      );
+    switch (this.perfilUsuarioLogado) {
+      case 'COZINHA':
+        this.filtrarSituacoesCozinha();
+        break;
+
+      case 'GARCOM':
+        this.filtrarSituacoesGarcom();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  filtrarSituacoesCozinha() {
+    this.situacoes = this.situacoes.filter(
+      (s: any) =>
+        s.situacaoPedidoId == 1 || // ENVIADO
+        s.situacaoPedidoId == 2    // EM PREPARO
+    );
+  }
+
+  filtrarSituacoesGarcom() {
+    this.situacoes = this.situacoes.filter(
+      (s: any) =>
+        s.situacaoPedidoId == 2 || // EM PREPARO
+        s.situacaoPedidoId == 3 || // PRONTO
+        s.situacaoPedidoId == 5    // CONTA SOLICITADA
+    );
   }
 
   changeSituacao(event: any) {

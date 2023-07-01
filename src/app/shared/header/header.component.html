@@ -8,7 +8,7 @@
           alt="Cartzilla"></a>
       <div class="navbar-toolbar d-flex align-items-center order-lg-3">
 
-        <div class="navbar-tool dropdown ms-3 cart"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
+        <div class="navbar-tool dropdown ms-3 cart" *ngIf="!pedidoService.pedido.pedidoId"><a class="navbar-tool-icon-box bg-secondary dropdown-toggle"
             routerLink="/carrinho"><span class="navbar-tool-label">{{carts.length}}</span><i
               class="navbar-tool-icon ci-cart"></i></a>
           <!-- Cart dropdown-->
@@ -39,7 +39,7 @@
           </div>
         </div>
         &nbsp;
-        <div *ngIf="usuarioEstaLogado" class="btn-group navbar-tool ms-3" (click)="abrirDialogConfirmarLogOut()">
+        <div *ngIf="usuarioEstaLogado && !pedidoService.pedido.pedidoId" class="btn-group navbar-tool ms-3" (click)="abrirDialogConfirmarLogOut()">
           <i class="navbar-tool-icon ci-sign-out"></i>
           &nbsp;
           Sair
@@ -78,7 +78,7 @@
       <span class="handheld-toolbar-icon"><i class="ci-menu"></i></span>
       <span class="handheld-toolbar-label">Menu</span>
     </a>
-    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/carrinho">
+    <a class="d-table-cell handheld-toolbar-item" href="javascript:void(0)" routerLink="/carrinho" *ngIf="!pedidoService.pedido.pedidoId">
       <span class="handheld-toolbar-icon"><i class="ci-cart"></i>
         <span class="badge bg-primary rounded-pill ms-1">{{carts.length}}</span>
       </span>

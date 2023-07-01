@@ -30,6 +30,11 @@ export class AuthGuard implements CanActivate {
             return false;
         }
 
+        if(route.routeConfig?.path === '' && !this.usuarioService.ehUsuarioTipoPedido){
+            this.router.navigate(['/acompanhar-pedidos']);
+            return false;
+        }
+
         return true;
     }
 }

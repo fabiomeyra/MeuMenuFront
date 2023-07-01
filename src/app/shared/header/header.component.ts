@@ -16,6 +16,7 @@ import { MesaPedidoService } from 'src/app/services/mesa-pedido/mesa-pedido.serv
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificacaoService } from 'src/app/services/notificacao/notificacao.service';
 import { ConfirmDialogComponent } from '../dialog-confirmacao/dialog-confirmacao.component';
+import { PedidoService } from 'src/app/services/pedido/pedido.service';
 
 @Component({
   selector: 'app-header',
@@ -47,7 +48,8 @@ export class HeaderComponent implements OnInit {
     public usuarioService: UsuarioService,
     private notificacaoService: NotificacaoService,
     private mesaPedidoService: MesaPedidoService,
-    public carrinhoService: CarrinhoService
+    public carrinhoService: CarrinhoService,
+    public pedidoService: PedidoService,
   ) {
     translate.setDefaultLang('en');
   }
